@@ -1,0 +1,16 @@
+<div id="nav" class="w-full ">
+
+  @for(option of filteredOptions; track option.label){
+    <!-- bg-blue-800 -->
+    <a routerLink="{{option.route}}"
+        routerLinkActive="bg-blue-800"
+        class="w-full px-6 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-black/30 transition ease-linear duration-150">
+        <div>
+            <!-- <i class="{{option.icon}}"></i> -->
+        </div>
+        <div class="flex flex-col">
+            <span class="text-lg font-bold leading-5 text-black"> {{option.label}} </span>
+        </div>
+    </a>
+  }
+</div>

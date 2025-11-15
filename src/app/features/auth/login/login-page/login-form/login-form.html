@@ -1,0 +1,23 @@
+<div class="login-container">
+
+    <h2>Iniciar Sesión</h2>
+  
+    <form (ngSubmit)="onLogin()">
+      <div>
+        <input [(ngModel)]="email" name="email" type="email" placeholder="Email" required />
+      </div>
+  
+      <div>
+        <input [(ngModel)]="password" name="password" type="password" placeholder="Contraseña" required />
+      </div>
+  
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Cargando...' : 'Entrar' }}
+      </button>
+  
+      @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+      }
+    </form>
+  </div>
+  
