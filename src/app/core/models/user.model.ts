@@ -1,4 +1,3 @@
-import { JwtPayload } from "jwt-decode";
 
 export interface User{
   username: string | undefined;

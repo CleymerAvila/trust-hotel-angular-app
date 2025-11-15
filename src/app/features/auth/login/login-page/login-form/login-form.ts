@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../../../../../core/services/auth.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -33,7 +33,7 @@ import { FormsModule } from '@angular/forms'
       color: red;
       margin-top: 10px;
     }
-  `
+  `,
 })
 export class LoginForm {
   private authService = inject(AuthService);
@@ -48,18 +48,16 @@ export class LoginForm {
     this.loading = true;
     this.errorMessage = '';
 
-
-    this.authService.login(this.email, this.password )
-      .subscribe({
-        next: () => {
-          this.loading = false;
-          this.router.navigate(['/topics']);
-        },
-        error: (err) => {
-          this.loading = false;
-          this.errorMessage = 'Credenciales inválidas';
-          console.error('Error de login:', err);
-        }
-      });
+    this.authService.login(this.email, this.password).subscribe({
+      next: () => {
+        this.loading = false;
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorMessage = 'Credenciales inválidas';
+        console.error('Error de login:', err);
+      },
+    });
   }
 }

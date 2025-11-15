@@ -1,10 +1,9 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { SidebarHeader } from './sidebar-header/sidebar-header';
 import { SidebarOptions } from './sidebar-options/sidebar-options';
-import { StorageService } from '../../../core/services/storage.service';
 import { User } from '../../../core/models/user.model';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',

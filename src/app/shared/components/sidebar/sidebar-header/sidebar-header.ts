@@ -1,6 +1,6 @@
 import { Component, inject, input, } from '@angular/core';
-import { environment } from '../../../../../environments/environment';
-import { AuthService } from '../../../../core/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'sidebar-header',

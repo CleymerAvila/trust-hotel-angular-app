@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,12 +11,12 @@ import { AuthService } from '../../../core/services/auth.service';
     }
 
     button {
-      paddin: 20px;
-      backgroud-color: red;
+      padding: 10px;
+      background-color: red;
       cursor: pointer;
     }
-  `
+  `,
 })
 export class Header {
-  authService = inject(AuthService)
+  authService = inject(AuthService);
 }

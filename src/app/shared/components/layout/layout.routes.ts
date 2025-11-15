@@ -8,7 +8,7 @@ export const LAYOUT_ROUTES: Routes = [
       {
           path: 'dashboard',
           loadComponent: () =>
-              import('../../../features/dashboard/dashboard').then(d => d.Dashboard)
+              import('@features/dashboard/dashboard').then(d => d.Dashboard)
       },
       {
         path: '',

@@ -10,13 +10,13 @@ export const routes: Routes = [
     },
     {
         path : '',
-        loadChildren: () => import('./shared/components/layout/layout.routes')
+        loadChildren: () => import('@shared/components/layout/layout.routes')
         .then(layout => layout.LAYOUT_ROUTES),
         canActivate: [authGuard]
     },
     {
         path : 'login',
-        loadComponent: () => import('./features/auth/login/login-page/login-page').then(lp => lp.LoginPage),
+        loadComponent: () => import('@features/auth/login/login-page/login-page').then(lp => lp.LoginPage),
         canActivate: [guestGuard]
     },
     {
