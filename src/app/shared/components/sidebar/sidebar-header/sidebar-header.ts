@@ -10,6 +10,5 @@ import { environment } from '@environments/environment';
 export class SidebarHeader {
   envs = environment;
   authService = inject(AuthService);
-
   username = input.required<string>();
 }

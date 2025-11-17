@@ -1,6 +1,6 @@
 import { CustomPayload } from './../models/custompayload.model';
 import { jwtDecode } from 'jwt-decode';
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ApiService } from "./api.service";
 import { StorageService } from "./storage.service";
 import { Router } from "@angular/router";
@@ -41,9 +41,11 @@ export class AuthService {
   }
 
   logout(): void {
-    this.storage.clear();
-    this.currentUserSubject.next(null);
-    this.router.navigate(['/login'])
+    if(confirm('Estas seguro que quieres cerrar la sesion')){      
+      this.storage.clear();
+      this.currentUserSubject.next(null);
+      this.router.navigate(['/login'])
+    }
   }
 
   isLoggeIn(): boolean {

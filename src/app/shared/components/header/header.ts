@@ -5,17 +5,6 @@ import { AuthService } from '@core/services/auth.service';
   selector: 'app-header',
   imports: [],
   templateUrl: './header.html',
-  styles: `
-    p {
-      color: blue;
-    }
-
-    button {
-      padding: 10px;
-      background-color: red;
-      cursor: pointer;
-    }
-  `,
 })
 export class Header {
   authService = inject(AuthService);
