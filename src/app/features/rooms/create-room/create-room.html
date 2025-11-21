@@ -1,0 +1,29 @@
+
+<div class="w-full  flex flex-col items-center justify-center m-2 p-2">
+  <h4 class="font-bold text-2xl text-gray-500 m-4">Registrar una habitacion</h4>
+  <form class="w-[400px] flex flex-col" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <label for="number">Numero</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="number" id="">
+    <label for="type">Selecciona el Tipo</label>
+    <select name="type" class="outline-1 rounded p-1.5" formControlName="type">
+      <option value="PERSONAL">PERSONAL</option>
+      <option value="DOBLE">DOBLE</option>
+      <option value="TRIPLE">TRIPLE</option>
+      <option value="SUITE">SUITE</option>
+      <option value="ESTANDAR">ESTANDAR</option>
+      <option value="FAMILIAR">FAMILIAR</option>
+    </select>
+    <label for="status">Estado</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="currentState" value="LIBRE" [disabled]="true">
+    <label for="floor">Piso</label>
+    <input class="outline-1 rounded p-1.5" type="number" formControlName="floor" id="">
+    <label for="capacity">Capacidad</label>
+    <input class="outline-1 rounded p-1.5" type="number" formControlName="capacity" id="">
+    <label for="pricePerNight">Precio por Noche</label>
+    <input class="outline-1 rounded p-1.5" type="number" formControlName="pricePerNight" id="">
+    <div class="flex justify-between mt-4">
+      <button routerLink="/rooms" class="bg-red-600 hover:bg-red-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Cancelar</button>
+      <button type="submit" [disabled]="!createForm.valid" class="bg-green-600 hover:bg-green-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Confirmar</button>
+    </div>
+  </form>
+</div>

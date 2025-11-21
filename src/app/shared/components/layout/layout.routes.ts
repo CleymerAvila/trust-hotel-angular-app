@@ -11,6 +11,10 @@ export const LAYOUT_ROUTES: Routes = [
               import('@features/dashboard/dashboard').then(d => d.Dashboard)
       },
       {
+        path: 'rooms',
+        loadChildren: () => import('@features/rooms/rooms.routes').then(m => m.ROOMS_ROUTES)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch : 'full'
