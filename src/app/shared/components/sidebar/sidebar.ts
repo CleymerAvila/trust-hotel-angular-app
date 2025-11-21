@@ -4,6 +4,8 @@ import { SidebarOptions } from './sidebar-options/sidebar-options';
 import { User } from '../../../core/models/user.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from '@core/services/auth.service';
+import { Hotel } from '@core/models/hotel.model';
+import { HotelService } from '@core/services/hotel.service';
 
 @Component({
   selector: 'app-sidebar',
