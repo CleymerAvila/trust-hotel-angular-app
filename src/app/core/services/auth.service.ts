@@ -9,7 +9,6 @@ import { User} from '../models/user.model';
 
 
 
-
 @Injectable({
   providedIn : 'root'
 })
@@ -18,7 +17,7 @@ export class AuthService {
   public currentUser: Observable<User | null >;
 
   constructor(private apiService: ApiService, private storage: StorageService, private router: Router){
-    const storedUser = localStorage.getItem('current_user')
+    const storedUser = localStorage.getItem('current_user');
     this.currentUserSubject = new BehaviorSubject<User | null>(
       storedUser ? JSON.parse(storedUser) : null
     );
@@ -41,7 +40,7 @@ export class AuthService {
   }
 
   logout(): void {
-    if(confirm('Estas seguro que quieres cerrar la sesion')){      
+    if(confirm('Estas seguro que quieres cerrar la sesion')){
       this.storage.clear();
       this.currentUserSubject.next(null);
       this.router.navigate(['/login'])
