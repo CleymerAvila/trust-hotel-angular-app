@@ -26,6 +26,7 @@ export class SidebarOptions {
     {label: 'Reportes', route: '/reports', roles: ['ROLE_ADMIN','ROLE_MANAGER'], icon: 'fa-solid fa-chart-line'},
     {label: 'Reservas', route: '/bookings', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-calendar-check'},
     {label: 'Estadias', route: '/stayings', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-door-open'},
+    {label: 'Clientes', route: '/clients', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: "fa-solid fa-people-roof"},
     {label: 'Promociones', route: '/promotions', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-tags'},
     {label: 'Pagos', route: '/payments', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-credit-card'},
     {label: 'Servicios Habitacion', route: '/room-services', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-concierge-bell'},

@@ -1,8 +1,8 @@
-<div class="flex flex-col m-5 p-4 overflow-y-hidden">
-  <h4 class="font-bold text-2xl text-slate-500">Habitaciones </h4>
+<div class="flex flex-col m-2 p-2 overflow-y-hidden overflow-x-hidden">
+  <h4 class="font-bold text-2xl text-slate-500">Empleados </h4>
   <div class="flex gap-4 justify-end mb-5">
     <button [routerLink]="['create']" class="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded mb-4 mt-2">
-      Agregar Habitacion
+      Agregar Empleado
     </button>
     <button (click)="toggleDropdown()" id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class=" inline-flex items-center justify-center text-body bg-white/40 box-border border  hover:text-heading active:border-sky-300 shadow-xs font-medium leading-5 rounded text-sm px-3 py-2 mb-4 mt-2" type="button">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,24 +33,24 @@
   </div>
 
   @if(loading()){
-    <p>Cargando habitaciones...</p>
+    <p>Cargando Empleados...</p>
   }
 
   @if(error()){
-    <p>Error al cargar las habitaciones</p>
+    <p>Error al cargar las Empleados</p>
     <div>
-      <button (click)="loadRooms()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 mt-2">
+      <button (click)="loadEmployees()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 mt-2">
         Reintentar
       </button>
     </div>
   }
 
   @if(!loading() && !error()){
-    @if(rooms().length === 0){
-      <p>No hay habitaciones disponibles.</p>
+    @if(employees().length === 0){
+      <p>No hay Empleados disponibles.</p>
       <p>Por favor asegurate de registrar nuevos</p>
     } @else {
-      <!-- cargamos las habitaciones aquí-->
+      <!-- cargamos las Empleados aquí-->
       <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded">
         <table class="w-full text-sm text-left rtl:text-right text-body">
           <thead class="bg-blue-200/90 text-sm text-body bg-neutral-secondary-medium border-b-blue-900 border-default-medium">
@@ -59,58 +59,64 @@
                 ID
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
-                Numero
+                DNI
+              </th>
+              <th scope="col" class="px-6 py-3 font-medium">
+                Nombre
+              </th>
+              <th scope="col" class="px-6 py-3 font-medium">
+                Email
+              </th>
+              <th scope="col" class="px-6 py-3 font-medium">
+                Telefono
+              </th>
+              <th scope="col" class="px-6 py-3 font-medium">
+                Salario
+              </th>
+              <th scope="col" class="px-6 py-3 font-medium">
+                Turno
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
                 Tipo
               </th>
-              <th scope="col" class="px-6 py-3 font-medium">
-                Estado
-              </th>
-              <th scope="col" class="px-6 py-3 font-medium">
-                Piso
-              </th>
-              <th scope="col" class="px-6 py-3 font-medium">
-                Capacidad
-              </th>
-              <th scope="col" class="px-6 py-3 font-medium">
-                PrecioxNoche
-              </th>
-              <th scope="col" class="px-6 py-3 font-medium">
+              <th scope="col" class="px-6 py-3 font-medium text-right">
                 Acciones
               </th>
             </tr>
           </thead>
 
-          <!-- Justo aqui en el body hacemos la iteracion de las habitaciones-->
+          <!-- Justo aqui en el body hacemos la iteracion de las Empleados-->
           <tbody>
-            @for(room of rooms(); track room.roomId){
+            @for(employee of employees() ; track employee.employeeId){
               <tr class="bg-white bg-neutral-primary-soft border-b border-b-black/20 hover:bg-neutral-secondary-medium">
                 <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                  {{ room.roomId}}
+                  {{ employee.employeeId}}
                 </th>
                 <td class="px-6 py-4">
-                  {{ room.number}}
+                  {{ employee.dni}}
                 </td>
                 <td class="px-6 py-4">
-                  {{ room.type }}
+                  {{ employee.name }}
                 </td>
                 <td class="px-6 py-4">
-                  {{ room.currentState}}
+                  {{ employee.email}}
                 </td>
                 <td class="px-6 py-4">
-                  {{ room.floor}}
+                  {{ employee.phone}}
                 </td>
                 <td class="px-6 py-4">
-                  {{ room.capacity }}
+                  {{ employee.salary | currency:'USD': 'symbol':'1.2-2' }}
                 </td>
                 <td class="px-6 py-4">
-                  {{ room.pricePerNight | currency:'USD': 'symbol':'1.2-2' }}
+                  {{ employee.workShift }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ employee.type }}
                 </td>
                 <td class="px-6 py-4 text-right flex gap-4 justify-start">
                   <!-- <a [routerLink]="['/']" class="text-blue-500 font-medium text-fg-brand hover:underline">Detalles</a> -->
-                  <a [routerLink]="['edit/', room.roomId]" class="text-blue-500 font-medium text-fg-brand hover:underline">Edit</a>
-                  <a (click)="deleteRoom(room.roomId)" class="text-red-600 font-medium text-fg-brand hover:underline">Delete</a>
+                  <a [routerLink]="['edit/', employee.employeeId]" class="text-blue-500 font-medium text-fg-brand hover:underline">Edit</a>
+                  <a (click)="deleteEmployee(employee.employeeId)" class="text-red-600 font-medium text-fg-brand hover:underline">Delete</a>
                 </td>
               </tr>
             }

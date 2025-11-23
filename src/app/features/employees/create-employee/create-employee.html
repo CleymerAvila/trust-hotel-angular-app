@@ -1,0 +1,58 @@
+
+<div class="w-full  flex flex-col items-center justify-center m-2 p-2">
+  <h4 class="font-bold text-2xl text-gray-500 m-4">Registrar Empleado</h4>
+  <form class="w-[900px] flex gap-4" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div class="w-full flex flex-col mr-4">
+      <label for="dni">DNI</label>
+      <input class="outline-1 rounded p-1.5" type="text" formControlName="dni" id="">
+      <label for="name">Nombre</label>
+      <input class="outline-1 rounded p-1.5" type="text" formControlName="name" id="">
+      <label for="email">Email</label>
+      <input class="outline-1 rounded p-1.5" type="text" formControlName="email" id="">
+      <label for="phone">Telefono</label>
+      <input class="outline-1 rounded p-1.5" type="text" formControlName="phone" id="">
+      <label for="type">Tipo empleado</label>
+      <select  name="type" class="outline-1 rounded p-1.5" formControlName="type">
+        <option value="PERSONNEL">STAFF PERSONAL</option>
+        <option value="MANAGER">GERENTE</option>
+        <option value="RECEPTIONIST">RECEPCIONISTA</option>
+      </select>
+      <label for="salary">Salario</label>
+      <input class="outline-1 rounded p-1.5" type="number" formControlName="salary" id="">
+    </div>
+    <div class="w-full flex flex-col mr-4">
+      <label for="workShift">Turno</label>
+      <select name="workShift" class="outline-1 rounded p-1.5" formControlName="workShift" id="">
+        <option value="MORNING">Mañana</option>
+        <option value="AFTERNOON">Tarde</option>
+        <option value="NIGHT">Noche</option>
+      </select>
+      <label for="bonus">Bonus</label>
+      <input class="outline-1 rounded p-1.5" type="number" formControlName="bonus" id="">
+      <label for="departament">Departamento</label>
+      <select name="departament"  class="outline-1 rounded p-1.5" formControlName="department" id="">
+        <option value="HOUSEKEEPING">Limpieza</option>
+        <option value="MAINTENANCE">Mantenimiento</option>
+        <option value="MANAGEMENT">Recepcion</option>
+        <option value="FOOD_AND_BEVERAGE">Comida y Bebida</option>
+        <option value="SALES_AND_MARKETING">Ventas y Marketing</option>
+        <option value="HUMAN_RESOURCES">Recursos Humanos</option>
+        <option value="ACCOUNTING">Contabilidad</option>
+      </select>
+      <label for="mainLanguage">Idioma Principal</label>
+      <select name="mainLanguage" class="outline-1 rounded p-1.5" formControlName="mainLanguage" id="">
+        <option value="SPANISH">Español</option>
+        <option value="ENGLISH">Ingles</option>
+        <option value="FRENCH">Frances</option>
+        <option value="GERMAN">Aleman</option>
+        <option value="CHINESE">Chino</option>
+        <option value="JAPANESE">Japones</option>
+        <option value="RUSSIAN">Ruso</option>
+      </select>
+      <div class="flex gap-5 justify-between mt-5">
+        <button routerLink="/employees" class="bg-red-600 hover:bg-red-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Cancelar</button>
+        <button type="submit" [disabled]="!createForm.valid" class="bg-green-600 hover:bg-green-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Confirmar</button>
+      </div>
+    </div>
+  </form>
+</div>

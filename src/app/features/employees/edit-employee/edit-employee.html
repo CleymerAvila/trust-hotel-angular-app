@@ -1,0 +1,46 @@
+
+<div class="w-full  flex flex-col items-center justify-center m-2 p-2">
+  <h4 class="font-bold text-2xl text-gray-500 m-4">Modificar Empleado</h4>
+  <form class="w-[400px] flex flex-col" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <label for="email">Correo</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="email" id="">
+    <label for="phone">Telefono</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="phone" id="">
+    <label for="salary">Salario</label>
+    <input class="outline-1 rounded p-1.5" type="number" formControlName="salary" id="">
+    <label for="workShift">Turno</label>
+    <select name="workShift" class="outline-1 rounded p-1.5" formControlName="workShift" id="">
+      <option value="MORNING">Mañana</option>
+      <option value="AFTERNOON">Tarde</option>
+      <option value="NIGHT">Noche</option>
+    </select>
+    <label for="type">Tipo</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="type" id="">
+      <label for="bonus">Bonus</label>
+      <input class="outline-1 rounded p-1.5" type="number" formControlName="bonus" id="">
+       <label for="departament">Departamento</label>
+      <select name="departament"  class="outline-1 rounded p-1.5" formControlName="department" id="">
+        <option value="HOUSEKEEPING">Limpieza</option>
+        <option value="MAINTENANCE">Mantenimiento</option>
+        <option value="MANAGEMENT">Recepcion</option>
+        <option value="FOOD_AND_BEVERAGE">Comida y Bebida</option>
+        <option value="SALES_AND_MARKETING">Ventas y Marketing</option>
+        <option value="HUMAN_RESOURCES">Recursos Humanos</option>
+        <option value="ACCOUNTING">Contabilidad</option>
+      </select>
+      <label for="mainLanguage">Idioma Principal</label>
+      <select name="mainLanguage" class="outline-1 rounded p-1.5" formControlName="mainLanguage" id="">
+        <option value="SPANISH">Español</option>
+        <option value="ENGLISH">Ingles</option>
+        <option value="FRENCH">Frances</option>
+        <option value="GERMAN">Aleman</option>
+        <option value="CHINESE">Chino</option>
+        <option value="JAPANESE">Japones</option>
+        <option value="RUSSIAN">Ruso</option>
+      </select>
+    <div class="flex justify-between mt-4">
+      <button type="button" routerLink="/employees" class="bg-red-600 hover:bg-red-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Cancelar</button>
+      <button type="submit" [disabled]="!editForm.valid" class="bg-green-600 hover:bg-green-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Confirmar</button>
+    </div>
+  </form>
+</div>

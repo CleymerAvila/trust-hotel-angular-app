@@ -15,6 +15,10 @@ export const LAYOUT_ROUTES: Routes = [
         loadChildren: () => import('@features/rooms/rooms.routes').then(m => m.ROOMS_ROUTES)
       },
       {
+        path: 'employees',
+        loadChildren: () => import('@features/employees/employees.routes').then(m => m.EMPLOYEES_ROUTES)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch : 'full'

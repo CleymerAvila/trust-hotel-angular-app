@@ -41,6 +41,11 @@ export class EditRoom {
           capacity: room.capacity,
           pricePerNight: room.pricePerNight
         });
+      },
+      error: (error) => {
+        alert('Error al obtener la habitacion');
+        console.error('Error al obtener la habitacion:', error);
+        this.route.navigate(['/rooms']);
       }
     });
 

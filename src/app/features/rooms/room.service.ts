@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { ApiService } from '@core/services/api.service';
 import { Room } from './room.model';
 import { Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
