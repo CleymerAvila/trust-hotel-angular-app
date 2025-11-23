@@ -1,0 +1,79 @@
+<div class="flex flex-col m-5 p-4 overflow-y-hidden">
+  <h4 class="font-bold text-2xl text-slate-500">Facturas</h4>
+
+  <div class="flex gap-4 justify-end mb-5">
+    <button [routerLink]="['create']"
+      class="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded mb-4 mt-2">
+      Crear Factura
+    </button>
+  </div>
+
+  @if(loading()){
+    <p>Cargando facturas...</p>
+  }
+
+  @if(error()){
+    <p>Error al cargar las facturas.</p>
+    <button (click)="loadInvoices()" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+      Reintentar
+    </button>
+  }
+
+  @if(!loading() && !error()){
+    @if(invoices().length === 0){
+      <p>No hay facturas registradas.</p>
+    } @else {
+      <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded">
+        <table class="w-full text-sm text-left text-body">
+          <thead class="bg-blue-200/90 text-body border-b-blue-900 border-default-medium">
+            <tr>
+              <th class="px-6 py-3 font-medium">Fecha</th>
+              <th class="px-6 py-3 font-medium">Tipo</th>
+              <th class="px-6 py-3 font-medium">Estado</th>
+              <th class="px-6 py-3 font-medium">Descuento</th>
+              <th class="px-6 py-3 font-medium">Total</th>
+              <th class="px-6 py-3 font-medium">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for(invoice of invoices(); track invoice.issueDate){
+              <tr class="bg-white border-b border-b-black/20 hover:bg-neutral-secondary-medium">
+                
+                <td class="px-6 py-4">
+                  {{ formatDate(invoice.issueDate) }}
+                </td>
+
+                <td class="px-6 py-4">
+                  {{ invoice.type }}
+                </td>
+
+                <td class="px-6 py-4">
+                  {{ invoice.status }}
+                </td>
+
+                <td class="px-6 py-4">
+                  {{ invoice.appliedDiscount ?? '—' }}
+                </td>
+
+                <td class="px-6 py-4">
+                  {{ invoice.finalTotal | currency:'USD' }}
+                </td>
+
+                <td class="px-6 py-4 flex gap-4">
+                  <a class="text-blue-500 hover:underline">Ver</a>
+                  <a class="text-red-600 hover:underline"
+                     (click)="deleteInvoice(invoice)">
+                     <!-- cuando ya los DTOs del invoice desde el back-end envien el id de la factura entonces cambio por (click)="deleteInvoice(invoice.invoiceId)"-->
+                     Eliminar
+                  </a>
+                </td>
+
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>
