@@ -1,0 +1,28 @@
+<div class="rounded-xl bg-white h-full shadow-sm p-6 border border-gray-200 max-w-md">
+    <h2 class="text-2xl text-center font-semibold text-gray-700 mb-2 ">
+        Ocupación del Hotel
+    </h2>
+
+    <div class="w-full flex justify-center">
+        <apx-chart
+        #chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [plotOptions]="chartOptions.plotOptions"
+        [fill]="chartOptions.fill"
+        [labels]="chartOptions.labels">
+        </apx-chart>
+    </div>
+
+    <div class="text-center">
+        <span class="text-sm font-semibold"
+            [ngClass]="variation >= 0 ? 'text-green-600' : 'text-red-600'">
+        {{ variation >= 0 ? '+' : '' }}{{ variation }}%
+        </span>
+    </div>
+
+    <p class="text-gray-500 text-center mt-2 text-sm">
+        Habitaciones ocupadas:
+        <span class="font-semibold">{{ occupied }}</span>/<span>{{ totalRooms }}</span>
+    </p>
+</div>

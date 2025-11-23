@@ -1,1 +1,36 @@
-<p>dashboard works!</p>
+<div class="grid grid-cols-12 gap-4 md:gap-6">
+
+    <div class="col-span-12 space-y-6 xl:col-span-7">
+        <div>
+            <app-card-hotel-status
+                [reservas]="totalReservasHoy"
+                [disponibles]="habitacionesDisponibles">
+            </app-card-hotel-status>
+        </div>
+    
+        <div class="grid grid-cols-2 gap-4 md:gap-5">
+            <div>
+                <app-card-monthly-revenue 
+                    [revenue]="ingresosMensuales">
+                </app-card-monthly-revenue>
+            </div>
+
+            <div>
+                <app-employees-active-card 
+                    [empleadosActivos]="empleadosActivos">
+                </app-employees-active-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-12 xl:col-span-5">
+        <div>
+            <app-ocupacion-card
+                [occupied]="ocupacionActualRooms"
+                [totalRooms]="habitacionesTotales"
+                [variation]="variacionOcupacion">
+            </app-ocupacion-card>
+        </div>
+    </div>
+
+</div>
