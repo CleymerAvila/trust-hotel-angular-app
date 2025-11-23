@@ -52,6 +52,17 @@ export class EditClient {
       };
       console.log('Datos del cliente a editar:', clientData);
       // Aqui puedes agregar la logica para enviar los datos al servidor
+
+      this.clientService.updateClient(this.clientId, clientData).subscribe({
+        next: (response) => {
+          alert('Cliente actualizado con exito');
+          this.route.navigate(['/clients']);;
+        },
+        error: (error) => {
+          alert('Error al actualizar el cliente');
+          console.error('Error al actualizar el cliente:', error);
+        }
+      });
     }
   }
 

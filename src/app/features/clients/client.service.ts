@@ -25,4 +25,8 @@ export class ClientService {
   getClientById(id: number): Observable<Client> {
     return this.apiService.get<Client>(`${this.endpoint}/${id}`);
   }
+
+  updateClient(id: number, clientData: any): Observable<Client> {
+    return this.apiService.put<Client>(`${this.endpoint}/${id}`, clientData);
+  }
 }
