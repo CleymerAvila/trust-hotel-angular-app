@@ -11,6 +11,16 @@ export class ApiService {
   private BASE_URL = environment.API_URL;
 
   constructor(private http: HttpClient){}
+  
+  //get<T>(url: string): Observable<T> {
+  //const token = localStorage.getItem('token');
+//
+  //  const headers = new HttpHeaders({
+  //    'Authorization': `Bearer ${token}`
+  //  });
+//
+  //  return this.http.get<T>(`${this.BASE_URL}${url}`);
+  //}
 
   get<T>(endpoint: string, params?: HttpParams): Observable<T> {
     return this.http.get<T>(`${this.BASE_URL}${endpoint}`, { params });

@@ -7,33 +7,7 @@ import { AuthService } from '@core/services/auth.service';
   selector: 'app-login-form',
   imports: [FormsModule],
   templateUrl: './login-form.html',
-  styles: `
-    .login-container {
-      max-width: 400px;
-      margin: 50px auto;
-      padding: 20px;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:disabled {
-      background: #ccc;
-    }
-    .error {
-      color: red;
-      margin-top: 10px;
-    }
-  `,
+  styleUrls: ['./login-form.css'],
 })
 export class LoginForm {
   private authService = inject(AuthService);
