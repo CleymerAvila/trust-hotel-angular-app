@@ -1,0 +1,20 @@
+
+<div class="w-full  flex flex-col items-center justify-center m-2 p-2">
+  <h4 class="font-bold text-2xl text-gray-500 m-4">Registrar un Cliente</h4>
+  <form class="w-[400px] flex flex-col" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <label for="dni">DNI</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="dni" id="">
+    <label for="name">Nombre</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="name" id="">
+    <label for="email">Email</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="email" id="">
+    <label for="address">Direccion</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="address" id="">
+    <label for="phone">Telefono</label>
+    <input class="outline-1 rounded p-1.5" type="text" formControlName="phone" id="">
+    <div class="flex justify-between mt-4">
+      <button routerLink="/clients" class="bg-red-600 hover:bg-red-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Cancelar</button>
+      <button type="submit" [disabled]="!createForm.valid" class="bg-green-600 hover:bg-green-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Confirmar</button>
+    </div>
+  </form>
+</div>
