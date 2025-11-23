@@ -23,6 +23,10 @@ export class RoomService {
     return this.apiService.get<Room>(`${this.endpoint}/${roomId}`);
   }
 
+  editRoom(roomId: number, roomData: any): Observable<Room> {
+    return this.apiService.put<Room>(`${this.endpoint}/${roomId}`, roomData);
+  }
+
   deleteRoomBy(roomId: number): Observable<void> {
     return this.apiService.delete<void>(`${this.endpoint}/${roomId}`);
   }
