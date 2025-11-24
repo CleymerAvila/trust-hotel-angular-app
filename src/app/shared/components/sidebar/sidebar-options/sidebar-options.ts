@@ -30,7 +30,7 @@ export class SidebarOptions {
     {label: 'Promociones', route: '/promotions', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-tags'},
     {label: 'Pagos', route: '/payments', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-credit-card'},
     {label: 'Servicios Habitacion', route: '/room-services', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-concierge-bell'},
-    {label: 'Facturas', route: '/Invoices', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-file-invoice'},
+    {label: 'Facturas', route: '/invoices', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-file-invoice'},
   ]
 
 

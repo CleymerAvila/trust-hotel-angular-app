@@ -27,6 +27,10 @@ export const LAYOUT_ROUTES: Routes = [
         loadChildren: () => import('@features/clients/clients.routes').then(c => c.CLIENTS_ROUTES)
       },
       {
+        path: 'invoices',
+        loadChildren: () => import('@features/invoices/invoices.routes').then(c => c.INVOICES_ROUTES)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch : 'full'
