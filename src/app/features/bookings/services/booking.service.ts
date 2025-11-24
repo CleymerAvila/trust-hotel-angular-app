@@ -29,4 +29,8 @@ export class BookingService {
   cancelBooking(id: number): Observable<Booking> {
     return this.apiService.delete<Booking>(`${this.endpoint}/cancel/${id}`)
   }
+
+  confirmCheckIn(id: number): Observable<Booking>{
+    return this.apiService.get(`${this.endpoint}/confirm-check-in/${id}`)
+  }
 }

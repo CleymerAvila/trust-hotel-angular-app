@@ -1,5 +1,5 @@
 <div class="flex flex-col m-2 p-2 overflow-y-hidden overflow-x-hidden">
-  <h4 class="font-bold text-2xl text-slate-500">Reservaciones </h4>
+  <h4 class="font-bold text-2xl text-slate-500">Estadias </h4>
   <div class="flex gap-4 justify-between mt-6">
     <div>
       <label for="input-group-1" class="sr-only">Search</label>
@@ -11,9 +11,9 @@
       </div>
     </div>
     <div class="flex flex-row gap-5">
-      <button [routerLink]="['make-booking']" class="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded mb-4 mt-2">
+      <!-- <button [routerLink]="['make-staying']" class="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded mb-4 mt-2">
         Agregar Reserva
-      </button>
+      </button> -->
       <button (click)="toggleDropdown()" id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class=" inline-flex items-center justify-center text-body bg-white/40 box-border border  hover:text-heading active:border-sky-300 shadow-xs font-medium leading-5 rounded text-sm px-3 py-2 mb-4 mt-2" type="button">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 2.5C12.2958 2.5 14.5458 2.69334 16.7358 3.065C17.18 3.14 17.5 3.52834 17.5 3.97834V4.84834C17.5 5.09456 17.4515 5.33838 17.3573 5.56587C17.2631 5.79336 17.1249 6.00006 16.9508 6.17417L12.4242 10.7008C12.2501 10.8749 12.1119 11.0816 12.0177 11.3091C11.9235 11.5366 11.875 11.7804 11.875 12.0267V14.4658C11.8751 14.8141 11.7781 15.1556 11.595 15.4519C11.4119 15.7482 11.1499 15.9876 10.8383 16.1433L8.125 17.5V12.0267C8.125 11.7804 8.07651 11.5366 7.98228 11.3091C7.88805 11.0816 7.74994 10.8749 7.57583 10.7008L3.04917 6.17417C2.87506 6.00006 2.73695 5.79336 2.64272 5.56587C2.54849 5.33838 2.5 5.09456 2.5 4.84834V3.97834C2.5 3.52834 2.82 3.14 3.26417 3.065C5.48964 2.68821 7.74286 2.49921 10 2.5Z" stroke="#667085" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -45,24 +45,24 @@
   </div>
 
   @if(loading()){
-    <p>Cargando Reservas...</p>
+    <p>Cargando Estadias...</p>
   }
 
   @if(error()){
-    <p>Error al cargar las Reservaciones</p>
+    <p>Error al cargar las Estadias</p>
     <div>
-      <button (click)="loadBookings()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 mt-2">
+      <button (click)="loadStayings()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 mt-2">
         Reintentar
       </button>
     </div>
   }
 
   @if(!loading() && !error()){
-    @if(bookings().length === 0){
-      <p>No hay Reservaciones disponibles.</p>
+    @if(stayings().length === 0){
+      <p>No hay Estdias disponibles.</p>
       <p>Por favor asegurate de registrar nuevas</p>
     } @else {
-      <!-- cargamos las bookinges aquí-->
+      <!-- cargamos las stayinges aquí-->
       <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded">
         <table class="w-full text-sm text-left rtl:text-right text-body">
           <thead class="bg-blue-200/90 text-sm text-body bg-neutral-secondary-medium border-b-blue-900 border-default-medium">
@@ -71,28 +71,28 @@
                 ID
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
-                #Habitacion
+                Reservacion
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
-                Cliente
+                Habitacion
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
-                Fecha Inicio
+                Fecha CheckIn
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
-                Fecha Fin
+                Fecha CheckOut
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
                 Estado
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
-                Anticipo
+                Total
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
                 Factura
               </th>
               <th scope="col" class="px-6 py-3 font-medium">
-                CheckIn
+                CheckOut
               </th>
               <th scope="col" class="px-6 py-3 font-medium text-right">
                 Acciones
@@ -102,39 +102,39 @@
 
           <!-- Justo aqui en el body hacemos la iteracion de las Empleados-->
           <tbody>
-            @for(booking of bookings() ; track booking.bookingId){
+            @for(staying of stayings() ; track staying.stayingId){
               <tr class="bg-white bg-neutral-primary-soft border-b border-b-black/20 hover:bg-neutral-secondary-medium">
                 <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                  {{ booking.bookingId}}
+                  {{ staying.stayingId}}
                 </th>
                 <td class="px-6 py-4">
-                  {{ booking.roomNumber}}
+                  {{ staying.bookingId}}
                 </td>
                 <td class="px-6 py-4">
-                  {{ booking.clientName }}
+                  {{ staying.roomId }}
                 </td>
                 <td class="px-6 py-4">
-                  {{ booking.startDate | date:'dd.MM.yy' }}
+                  {{ staying.checkInDate | date:'dd.MM.yy' }}
                 </td>
                 <td class="px-6 py-4">
-                  {{ booking.endDate  | date:'dd.MM.yy' }}
+                  {{ staying.checkOutDate  | date:'dd.MM.yy' }}
                 </td>
                 <td class="px-6 py-4">
-                  {{ booking.status}}
+                  {{ staying.status}}
                 </td>
                 <td class="px-6 py-4">
-                  ${{ booking.advanceDeposit }}
+                  ${{ staying.totalAmount }}
                 </td>
-                <td class="px-6 py-4 bg-blue-300 hover:cursor-pointer" (click)="redirecToInvoice(booking.invoiceId)">
+                <td class="px-6 py-4 bg-blue-300 hover:cursor-pointer" (click)="redirecToInvoice(staying.invoiceId)">
                   $ 📄
                 </td>
                 <td class="px-6 py-4 hover:cursor-pointer">
-                  <button type="button" (click)="confirmCheckIn(booking.bookingId)" class="border-green-300 border-2 p-1 rounded-2xl hover:cursor-pointer hover:bg-green-400 hover:text-white text-xs font-bold"> Check in</button>
+                  <button type="button" (click)="confirmCheckOut(staying.stayingId)" class="border-green-300 border-2 p-1 rounded-2xl hover:cursor-pointer hover:bg-green-400 hover:text-white text-xs font-bold"> Check Out</button>
                 </td>
                 <td class="px-6 py-4 text-right flex gap-4 justify-start">
                   <!-- <a [routerLink]="['/']" class="text-blue-500 font-medium text-fg-brand hover:underline">Detalles</a> -->
-                  <a (click)="checkIn(booking.bookingId)" class="text-blue-500 font-medium text-fg-brand hover:underline">Generar Factura</a>
-                  <a (click)="cancelBooking(booking.bookingId)" class="text-red-600 font-medium text-fg-brand hover:underline">Cancel</a>
+                  <a (click)="checkOut(staying.stayingId)" class="text-blue-500 font-medium text-fg-brand hover:underline">Generar Factura</a>
+                  <a (click)="revertCheckOut(staying.stayingId)" class="text-green-600 font-medium text-fg-brand hover:underline">Revertir CheckOut</a>
                 </td>
               </tr>
             }

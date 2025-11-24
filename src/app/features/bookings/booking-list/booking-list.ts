@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { BookingService } from '../services/booking.service';
 import { Booking } from '../booking.model';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -13,6 +13,7 @@ export class BookingList {
   isOpen = signal(false);
   private bookingService = inject(BookingService);
   bookings = signal<Booking[]>([]);
+  router = inject(Router);
 
   loading = signal(true);
   error = signal<string | null>(null);
@@ -58,6 +59,7 @@ export class BookingList {
   redirecToInvoice(initialInvoiceId: number){
     if(initialInvoiceId){
       alert('Reserva con factura ID: ' + initialInvoiceId)
+      this.router.navigate([`invoices/${initialInvoiceId}`])
     } else {
       alert('Esta reserva no cuenta con factura inicial')
     }
@@ -73,6 +75,21 @@ export class BookingList {
         error : (error) => {
           alert('Error al generar la factura')
           console.error(error, 'error trying to create invoice')
+        }
+      })
+    }
+  }
+
+  confirmCheckIn(bookingId: number): void {
+    if(confirm('Estas seguro que deseas confirmar el checkIn')){
+      this.bookingService.confirmCheckIn(bookingId).subscribe({
+        next: (booking) => {
+          alert("Check In realizado satisfactoriamente")
+          this.loadBookings();
+        },
+        error: (error) => {
+          alert('Error al realizar check in de la reserva')
+          console.error(error, 'error trying to make check in')
         }
       })
     }
