@@ -1,0 +1,157 @@
+<div class="p-8 max-w-4xl mx-auto">
+
+    @if (loading()) {
+        <p class="text-gray-500">Cargando factura...</p>
+    }
+
+    @if (error()) {
+        <p class="text-red-600">Error al cargar la factura.</p>
+    }
+
+    @if (invoice()) {
+
+        <div id="print-section">
+
+            <div class="bg-white shadow-lg rounded-xl p-10 border border-gray-200">
+
+            @if (hotel()) {
+            <div class="flex items-center justify-between mb-8">
+                
+                <div class="flex items-center gap-4">
+                    <img src="/logo.png" alt="Hotel Logo" class="w-20 h-20 object-contain rounded-lg">
+
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">{{ hotel()!.name }}</h1>
+                        <p class="text-gray-600">
+                            ⭐ {{ hotel()!.category }} estrellas
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-right text-gray-700">
+                    <p>{{ hotel()!.address }}</p>
+                    <p>Cartagena de Indias, Colombia</p>
+                    <p>Tel: {{ hotel()!.phone }}</p>
+                </div>
+
+            </div>
+        }
+
+            <!-- Encabezado -->
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Factura</h1>
+                <div class="text-right">
+                <p class="text-sm text-gray-600">N° Factura</p>
+                <p class="text-2xl font-semibold">#{{ invoice()?.invoiceId }}</p>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Información principal -->
+            <div class="grid grid-cols-2 gap-6 text-gray-700 mb-8">
+
+                <div>
+                <p class="font-semibold">Fecha de emisión:</p>
+                <p>{{ issueDateFixed() | date:'medium' }}</p>
+                </div>
+
+                <div>
+                <p class="font-semibold">Estado:</p>
+                <span class="px-3 py-1 rounded-full text-sm text-gray-900">
+                    {{ invoice()?.status }}
+                </span>
+                </div>
+
+                <div>
+                <p class="font-semibold">Tipo de factura:</p>
+                <p>{{ invoice()?.invoiceType }}</p>
+                </div>
+
+                <div>
+                <p class="font-semibold">Descuento aplicado:</p>
+                <p>{{ invoice()?.appliedDiscount }}%</p>
+                </div>
+
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Cliente -->
+            <h2 class="text-xl font-bold mb-2 text-gray-800">Datos del cliente</h2>
+            <div class="bg-gray-50 p-4 rounded-xl border mb-6">
+
+                @if (invoice()?.client) {
+                    <p><strong>Nombre:</strong> {{ invoice()!.client!.name }}</p>
+                    <p><strong>DNI:</strong> {{ invoice()!.client!.dni }}</p>
+                    <p><strong>Email:</strong> {{ invoice()!.client!.email }}</p>
+                    <p><strong>Teléfono:</strong> {{ invoice()!.client!.phone }}</p>
+                }
+
+            </div>
+
+            <!-- Habitación -->
+            <h2 class="text-xl font-bold mb-2 text-gray-800">Datos de la habitación</h2>
+
+            @if (invoice()?.room) {
+                <div class="bg-gray-50 p-4 rounded-xl border mb-6">
+                    <p><strong>Habitación:</strong> {{ invoice()!.room!.number }}</p>
+                    <p><strong>Tipo:</strong> {{ invoice()!.room!.type }}</p>
+                    <p><strong>Precio/noche:</strong> ${{ invoice()!.room!.pricePerNight }}</p>
+                </div>
+            } @else {
+                <p class="text-gray-500 italic mb-6">No hay datos de habitación.</p>
+            }
+
+
+            <!-- Pagos -->
+            <h2 class="text-xl font-bold mb-2 text-gray-800">Pagos registrados</h2>
+
+            @if (invoice()?.payments?.length) {
+
+                <table class="w-full text-left border mb-6">
+                <thead class="bg-gray-100">
+                    <tr>
+                    <th class="p-2">Fecha</th>
+                    <th class="p-2">Monto</th>
+                    <th class="p-2">Método</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (p of invoice()?.payments; track p.paymentId) {
+                    <tr class="border-t">
+                        <td class="p-2">{{ p.issueDate | date:'short' }}</td>
+                        <td class="p-2">${{ p.totalAmount }}</td>
+                        <td class="p-2">{{ p.paymentMethod }}</td>
+                    </tr>
+                    }
+                </tbody>
+                </table>
+
+            } @else {
+                <p class="text-gray-500 italic mb-6">— No hay pagos registrados —</p>
+            }
+
+            <hr class="my-4">
+
+            <!-- Totales -->
+            <div class="text-right">
+                <p class="text-xl font-semibold">Total:</p>
+                <p class="text-4xl font-bold text-green-700">
+                ${{ invoice()?.totalAmount }}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="text-right mt-6">
+        <button onclick="window.print()"
+            class="px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow">
+            Imprimir factura
+        </button>
+    </div>
+
+    }
+
+</div>

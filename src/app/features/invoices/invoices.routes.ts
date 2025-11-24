@@ -1,8 +1,14 @@
 import { Routes } from "@angular/router";
+import { InvoicesList } from "./invoices-list/invoice-list";
 
 export const INVOICES_ROUTES: Routes = [
     {
         path: '',
-        loadComponent: () => import('@features/invoices/invoices-list/invoice-list').then(m => m.InvoicesList)
+        component: InvoicesList
+    },
+    {
+    path: ':id',
+    loadComponent: () => import('./invoice-details/invoice-details')
+        .then(c => c.InvoicesDetails)
     }
 ]

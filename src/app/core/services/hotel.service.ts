@@ -3,11 +3,13 @@ import { Hotel } from "@core/models/hotel.model";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { ApiService } from "./api.service";
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class HotelService {
+
+  private apiUrl = 'http://localhost:8080/api/v1';
+
   endpoint = '/hotels';
   private currentHotelSubject: BehaviorSubject<Hotel| null>;
   public currentHotel$: Observable<Hotel | null>;
@@ -28,5 +30,9 @@ export class HotelService {
         localStorage.setItem('current_hotel', JSON.stringify(hotel));
       })
     )
+  }
+
+  getHotelById(id: number): Observable<Hotel> {
+    return this.apiService.get<Hotel>(`${this.endpoint}/${id}`);
   }
 }
