@@ -29,4 +29,12 @@ export class RoomService {
   deleteRoomBy(roomId: number): Observable<void> {
     return this.apiService.delete<void>(`${this.endpoint}/${roomId}`);
   }
+
+  getAvailableRooms(startDate: string, endDate: string): Observable<Room[]> {
+    const payload = {
+      startDate,
+      endDate
+    }
+    return this.apiService.post(`${this.endpoint}/available`, payload)
+  }
 }

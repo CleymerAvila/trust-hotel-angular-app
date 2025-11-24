@@ -19,6 +19,14 @@ export const LAYOUT_ROUTES: Routes = [
         loadChildren: () => import('@features/employees/employees.routes').then(m => m.EMPLOYEES_ROUTES)
       },
       {
+        path: 'bookings',
+        loadChildren: () => import('@features/bookings/booking.routes').then(m => m.BOOKINGS_ROUTES)
+      },
+      {
+        path: 'stayings',
+        loadChildren: () => import('@features/stayings/staying.routes').then(s => s.STAYINGS_ROUTES)
+      },
+      {
         path: 'clients',
         loadChildren: () => import('@features/clients/clients.routes').then(c => c.CLIENTS_ROUTES)
       },
