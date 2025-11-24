@@ -1,0 +1,100 @@
+<!-- Overlay backdrop -->
+<div class="fixed inset-0 bg-black/70 bg-opacity-50 z-40 transition-opacity duration-300" (click)="closeModal()"></div>
+
+<!-- Modal -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div
+    class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col transform transition-all duration-300"
+    (click)="$event.stopPropagation()">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-6 border-b border-gray-200">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900">Seleccionar Habitación</h2>
+        <p class="text-sm text-gray-600 mt-1" *ngIf="dateRange">
+          Disponibles del {{ dateRange.startDate | date: 'dd/MM/yyyy' }} al {{ dateRange.endDate | date: 'dd/MM/yyyy' }}
+        </p>
+      </div>
+      <button (click)="closeModal()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Información de búsqueda -->
+    <div *ngIf="dateRange" class="px-6 py-3 bg-blue-50 border-b border-blue-200">
+      <p class="text-sm text-blue-800">
+        🔍 Mostrando habitaciones disponibles para {{ getNumberOfNights() }} noche(s)
+      </p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading()" class="flex items-center justify-center flex-1">
+      <div class="text-center">
+        <div class="animate-spin inline-block w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full"></div>
+        <p class="mt-4 text-gray-600 font-medium">Buscando habitaciones disponibles...</p>
+        <p class="text-sm text-gray-500 mt-1">Esto puede tomar unos segundos</p>
+      </div>
+    </div>
+
+    <!-- Rooms Grid -->
+    <div class="flex-1 overflow-y-auto p-6" *ngIf="!isLoading()">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div *ngFor="let room of availableRooms()" (click)="selectRoom(room)"
+          class="p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition-all duration-200 hover:border-blue-500 hover:shadow-lg hover:bg-blue-50">
+          <!-- Header -->
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <h3 class="text-xl font-bold text-gray-900">{{ room.number }}</h3>
+              <p class="text-sm text-gray-600">{{ room.type }}</p>
+            </div>
+            <div
+              class="flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
+              </svg>
+              Disponible
+            </div>
+          </div>
+
+          <!-- Detalles -->
+          <div class="border-t border-gray-200 pt-3">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-gray-600 text-sm">Capacidad:</span>
+              <span class="font-semibold text-gray-900">{{ room.capacity }} personas</span>
+            </div>
+            <p class="text-2xl font-bold text-blue-600">${{ room.pricePerNight| number: '1.2-2' }}/noche</p>
+            <p class="text-xs text-gray-500 mt-1">
+              Total: ${{ calculateTotal(room.pricePerNight) | number: '1.2-2' }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- No results -->
+      <div *ngIf="availableRooms().length === 0" class="flex items-center justify-center h-32">
+        <div class="text-center text-gray-500">
+          <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+          </svg>
+          <p class="font-medium">No hay habitaciones disponibles</p>
+          <p class="text-sm mt-1">Para estos fechas no hay habitaciones disponibles</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="p-4 border-t border-gray-200 bg-gray-50 flex gap-2">
+      <button (click)="closeModal()"
+        class="flex-1 px-4 py-2.5 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200">
+        Cancelar
+      </button>
+      <button (click)="changeDates()"
+        class="flex-1 px-4 py-2.5 border-2 border-blue-300 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors duration-200">
+        Cambiar fechas
+      </button>
+    </div>
+  </div>
+</div>
