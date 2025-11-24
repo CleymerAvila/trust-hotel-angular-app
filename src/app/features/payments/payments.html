@@ -1,0 +1,40 @@
+<div class="rounded-xl bg-white shadow-sm p-6 border border-gray-200">
+
+    <h2 class="text-2xl font-semibold mb-6">Pagos Registrados</h2>
+
+    <div *ngIf="loading()">Cargando pagos...</div>
+
+    <table class="min-w-full text-left" *ngIf="!loading()">
+        <thead>
+        <tr class="border-b font-semibold">
+            <th class="p-3">ID</th>
+            <th class="p-3">Método</th>
+            <th class="p-3">Monto</th>
+            <th class="p-3">Fecha</th>
+            <th class="p-3">Estado</th>
+            <th class="p-3">Cliente</th>
+            <th class="p-3">Factura</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let payment of payments()"
+            class="border-b hover:bg-gray-50 transition">
+            
+            <td class="p-3">{{ payment.paymentId }}</td>
+            <td class="p-3">{{ payment.paymentMethod }}</td>
+            <td class="p-3">${{ payment.totalAmount }}</td>
+            <td class="p-3">{{ payment.issueDate | date:'short' }}</td>
+            <td class="p-3">{{ payment.status }}</td>
+            <td class="p-3">
+            {{ payment.invoice.client.name || 'N/A' }}
+            </td>
+            <td class="p-3">
+            Factura #{{ payment.invoice.invoiceId }}
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>

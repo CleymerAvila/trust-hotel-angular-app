@@ -27,6 +27,7 @@
             <table class="w-full text-sm text-left text-body">
             <thead class="bg-blue-200/90 text-body border-b-blue-900 border-default-medium">
                 <tr>
+                <th class="px-6 py-3 font-medium">ID</th>
                 <th class="px-6 py-3 font-medium">Fecha</th>
                 <th class="px-6 py-3 font-medium">Tipo</th>
                 <th class="px-6 py-3 font-medium">Estado</th>
@@ -40,6 +41,10 @@
                 @for(invoice of invoices(); track invoice.issueDate){
                 <tr class="bg-white border-b border-b-black/20 hover:bg-neutral-secondary-medium">
                     
+                    <td class="px-6 py-4">
+                    {{ invoice.invoiceId }}
+                    </td>
+
                     <td class="px-6 py-4">
                     {{ formatDate(invoice.issueDate) }}
                     </td>
