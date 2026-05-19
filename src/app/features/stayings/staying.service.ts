@@ -19,10 +19,6 @@ export class StayingService {
     return this.apiService.get(`${this.endpoint}/check-out/${stayingId}`);
   }
 
-  confirmCheckOut(stayingId: number): Observable<string>{
-    return this.apiService.get(`${this.endpoint}/confirm-check-out/${stayingId}`);
-  }
-
   revertCheckOut(): Observable<string> {
     return this.apiService.get(`${this.endpoint}/check-out/undo`);
   }
