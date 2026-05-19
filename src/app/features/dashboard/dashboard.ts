@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { RoomService } from '@features/rooms/room.service';
 import { CardHotelStatusComponent } from "@shared/components/dashboard-data/card-hotel-status/card-hotel-status";
 import { CardMonthlyRevenueComponent } from "@shared/components/dashboard-data/card-monthly-revenue/card-monthly-revenue";
 import { EmployeesActiveCardComponent } from "@shared/components/dashboard-data/employees-active-card/employees-active-card";
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { OcupacionCardComponent } from "@shared/components/dashboard-data/ocupacion-card/ocupacion-card";
+import { NgApexchartsModule } from 'ng-apexcharts';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
-import { RoomService } from '@features/rooms/room.service';
-import { Room } from '@features/rooms/room.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,6 +34,8 @@ export class Dashboard implements OnInit {
   totalReservasHoy: number = 0;
   ingresosMensuales: number = 0;
   empleadosActivos: number = 0;
+  checkinsToday: number = 0;
+  checkoutsToday: number = 0;
 
   ocupacionActual: number = 0;
   habitacionesTotales: number = 0;
@@ -44,7 +45,8 @@ export class Dashboard implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private roomService: RoomService
+    private roomService: RoomService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -74,9 +76,13 @@ export class Dashboard implements OnInit {
 
       // Total reservas (usando totalBookings por ahora)
       this.totalReservasHoy = data.totalBookings;
+      this.checkinsToday = data.totalBookings;
+      this.checkoutsToday = data.completedBookings;
 
       // Empleados activos
       this.empleadosActivos = data.activeEmployees;
+
+      this.cdr.detectChanges();
     },
     error: err => {
       console.error("❌ ERROR en /dashboard-data (getDashboardData)", err);
