@@ -1,0 +1,39 @@
+
+<div class="w-full  flex flex-col items-center justify-center m-2 p-2">
+  <h4 class="font-bold text-2xl text-gray-500 m-4">Modificar Promoción</h4>
+  
+  @if(loading()){
+    <p>Cargando promoción...</p>
+  } @else {
+    <form class="w-[400px] flex flex-col" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <label for="name">Nombre</label>
+      <input class="outline-1 rounded p-1.5" type="text" formControlName="name" id="">
+      <label for="description">Descripción</label>
+      <textarea class="outline-1 rounded p-1.5" formControlName="description" id=""></textarea>
+      <label for="type">Tipo</label>
+      <select name="type" class="outline-1 rounded p-1.5" formControlName="type" id="">
+        <option value="">Seleccionar tipo</option>
+        @for(type of promotionTypes; track type){
+          <option [value]="type">{{ type }}</option>
+        }
+      </select>
+      <label for="status">Estado</label>
+      <select name="status" class="outline-1 rounded p-1.5" formControlName="status" id="">
+        <option value="">Seleccionar estado</option>
+        @for(status of promotionStatus; track status){
+          <option [value]="status">{{ status }}</option>
+        }
+      </select>
+      <label for="startDate">Fecha Inicio</label>
+      <input class="outline-1 rounded p-1.5" type="date" formControlName="startDate" id="">
+      <label for="endDate">Fecha Fin</label>
+      <input class="outline-1 rounded p-1.5" type="date" formControlName="endDate" id="">
+      <label for="maximumUse">Usos Máximos</label>
+      <input class="outline-1 rounded p-1.5" type="number" formControlName="maximumUse" id="">
+      <div class="flex justify-between mt-4">
+        <button type="button" routerLink="/promotions" class="bg-red-600 hover:bg-red-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Cancelar</button>
+        <button type="submit" [disabled]="!editForm.valid" class="bg-green-600 hover:bg-green-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Confirmar</button>
+      </div>
+    </form>
+  }
+</div>
