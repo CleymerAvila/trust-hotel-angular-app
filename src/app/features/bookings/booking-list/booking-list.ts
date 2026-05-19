@@ -3,6 +3,7 @@ import { BookingService } from '../services/booking.service';
 import { Booking } from '../booking.model';
 import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { InvoiceService } from '@features/invoices/invoice.service';
 
 @Component({
   selector: 'app-booking-list',
@@ -12,6 +13,7 @@ import { DatePipe } from '@angular/common';
 export class BookingList {
   isOpen = signal(false);
   private bookingService = inject(BookingService);
+  private invoiceService = inject(InvoiceService)
   bookings = signal<Booking[]>([]);
   router = inject(Router);
 
@@ -65,10 +67,10 @@ export class BookingList {
     }
   }
 
-  checkIn(bookingId: number){
+  generateInvoice(bookingId: number){
     if(confirm('Desea generar la factura para la estadia?')){
-      this.bookingService.checkIn(bookingId).subscribe({
-        next: (booking) => {
+      this.invoiceService.generateInitial(bookingId).subscribe({
+        next: () => {
           alert('Factura generada exitosamente')
           this.loadBookings()
         },
@@ -80,9 +82,9 @@ export class BookingList {
     }
   }
 
-  confirmCheckIn(bookingId: number): void {
+  checkIn(bookingId: number): void {
     if(confirm('Estas seguro que deseas confirmar el checkIn')){
-      this.bookingService.confirmCheckIn(bookingId).subscribe({
+      this.bookingService.checkIn(bookingId).subscribe({
         next: (booking) => {
           alert("Check In realizado satisfactoriamente")
           this.loadBookings();

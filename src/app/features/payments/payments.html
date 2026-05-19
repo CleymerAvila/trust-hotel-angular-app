@@ -20,14 +20,14 @@
         <tbody>
         <tr *ngFor="let payment of payments()"
             class="border-b hover:bg-gray-50 transition">
-            
+
             <td class="p-3">{{ payment.paymentId }}</td>
             <td class="p-3">{{ payment.paymentMethod }}</td>
             <td class="p-3">${{ payment.totalAmount }}</td>
-            <td class="p-3">{{ payment.issueDate | date:'short' }}</td>
+            <td class="p-3">{{ payment.issueDate }}</td>
             <td class="p-3">{{ payment.status }}</td>
             <td class="p-3">
-            {{ payment.invoice.client.name || 'N/A' }}
+            {{ payment.invoice.clientName || 'N/A' }}
             </td>
             <td class="p-3">
             Factura #{{ payment.invoice.invoiceId }}

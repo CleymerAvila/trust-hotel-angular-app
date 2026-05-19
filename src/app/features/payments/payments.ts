@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { PaymentService, PaymentDTO } from '@core/services/payment.service';
+import { PaymentService, PaymentDTO } from '@features/payments/payment.service';
 import { DatePipe, CommonModule } from '@angular/common';
 
 @Component({
@@ -18,6 +18,7 @@ export class PaymentsComponent implements OnInit {
     constructor(private paymentService: PaymentService) {}
 
     ngOnInit(): void {
+      console.log('Entrando a el ngOnInit de Pagos')
         this.paymentService.getAllPayments().subscribe({
         next: (data) => {
             this.payments.set(data);
