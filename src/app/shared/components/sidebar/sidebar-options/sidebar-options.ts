@@ -31,8 +31,8 @@ export class SidebarOptions {
     {label: 'Pagos', route: '/payments', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-credit-card'},
     {label: 'Servicios Habitacion', route: '/room-services', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-concierge-bell'},
     {label: 'Facturas', route: '/invoices', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-file-invoice'},
+    {label: 'Promociones', route: '/promotions', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-percent'},
   ]
-
 
   get filteredOptions(): MenuOption[] {
     return this.options.filter(opt => opt.roles.includes(this.role()))

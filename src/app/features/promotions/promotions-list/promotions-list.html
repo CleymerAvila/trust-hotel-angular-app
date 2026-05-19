@@ -1,0 +1,105 @@
+<div class="flex flex-col m-2 p-2 overflow-y-hidden overflow-x-hidden">
+    <h4 class="font-bold text-2xl text-slate-500">Promociones</h4>
+    <div class="flex gap-4 justify-end mb-5">
+        <button [routerLink]="['create']"
+            class="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded mb-4 mt-2">
+            Agregar Promoción
+        </button>
+    </div>
+
+    @if(loading()){
+    <p>Cargando Promociones...</p>
+    }
+
+    @if(error()){
+    <p>Error al cargar las Promociones</p>
+    <div>
+        <button (click)="loadPromotions()"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 mt-2">
+            Reintentar
+        </button>
+    </div>
+    }
+
+    @if(!loading() && !error()){
+    @if(promotions().length === 0){
+    <p>No hay Promociones disponibles.</p>
+    <p>Por favor asegurate de registrar nuevas</p>
+    } @else {
+    <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded">
+        <table class="w-full text-sm text-left rtl:text-right text-body">
+            <thead
+                class="bg-blue-200/90 text-sm text-body bg-neutral-secondary-medium border-b-blue-900 border-default-medium">
+                <tr>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        ID
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        Nombre
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        Descripción
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        Tipo
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        Estado
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        Inicio
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        Fin
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        Usos Máximos
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium text-right">
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for(promo of promotions() ; track promo.promotionId){
+                <tr
+                    class="bg-white bg-neutral-primary-soft border-b border-b-black/20 hover:bg-neutral-secondary-medium">
+                    <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
+                        {{ promo.promotionId}}
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ promo.name }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ promo.description }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ promo.type }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ promo.status }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ promo.startDate }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ promo.endDate }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ promo.maximumUse }}
+                    </td>
+                    <td class="px-6 py-4 text-right flex gap-4 justify-start">
+                        <a [routerLink]="['/promotions/edit', promo.promotionId]"
+                            class="text-blue-500 font-medium text-fg-brand hover:underline">Editar</a>
+                        <a (click)="deletePromotion(promo.promotionId!)"
+                            class="text-red-600 font-medium text-fg-brand hover:underline cursor-pointer">Eliminar</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+    }
+</div>

@@ -1,0 +1,38 @@
+
+<div class="w-full  flex flex-col items-center justify-center m-2 p-2">
+  <h4 class="font-bold text-2xl text-gray-500 m-4">Registrar Promoción</h4>
+  <form class="w-[900px] flex gap-4" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div class="w-full flex flex-col mr-4">
+      <label for="name">Nombre</label>
+      <input class="outline-1 rounded p-1.5" type="text" formControlName="name" id="">
+      <label for="description">Descripción</label>
+      <textarea class="outline-1 rounded p-1.5" formControlName="description" id=""></textarea>
+      <label for="type">Tipo</label>
+      <select name="type" class="outline-1 rounded p-1.5" formControlName="type">
+        <option value="">Seleccionar tipo</option>
+        @for(type of promotionTypes; track type){
+          <option [value]="type">{{ type }}</option>
+        }
+      </select>
+      <label for="status">Estado</label>
+      <select name="status" class="outline-1 rounded p-1.5" formControlName="status">
+        <option value="">Seleccionar estado</option>
+        @for(status of promotionStatus; track status){
+          <option [value]="status">{{ status }}</option>
+        }
+      </select>
+    </div>
+    <div class="w-full flex flex-col mr-4">
+      <label for="startDate">Fecha Inicio</label>
+      <input class="outline-1 rounded p-1.5" type="date" formControlName="startDate" id="">
+      <label for="endDate">Fecha Fin</label>
+      <input class="outline-1 rounded p-1.5" type="date" formControlName="endDate" id="">
+      <label for="maximumUse">Usos Máximos</label>
+      <input class="outline-1 rounded p-1.5" type="number" formControlName="maximumUse" id="">
+      <div class="flex gap-5 justify-between mt-5">
+        <button type="button" routerLink="/promotions" class="bg-red-600 hover:bg-red-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Cancelar</button>
+        <button type="submit" [disabled]="!createForm.valid" class="bg-green-600 hover:bg-green-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer">Confirmar</button>
+      </div>
+    </div>
+  </form>
+</div>
