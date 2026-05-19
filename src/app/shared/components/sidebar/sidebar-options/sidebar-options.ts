@@ -27,11 +27,10 @@ export class SidebarOptions {
     {label: 'Reservas', route: '/bookings', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-calendar-check'},
     {label: 'Estadias', route: '/stayings', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-door-open'},
     {label: 'Clientes', route: '/clients', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: "fa-solid fa-people-roof"},
-    {label: 'Promociones', route: '/promotions', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-tags'},
+    {label: 'Promociones', route: '/promotions', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-percent'},
     {label: 'Pagos', route: '/payments', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-credit-card'},
     {label: 'Servicios Habitacion', route: '/room-services', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-concierge-bell'},
     {label: 'Facturas', route: '/invoices', roles: ['ROLE_ADMIN','ROLE_RECEPTIONIST'], icon: 'fa-solid fa-file-invoice'},
-    {label: 'Promociones', route: '/promotions', roles: ['ROLE_ADMIN','ROLE_MANAGER', 'ROLE_RECEPTIONIST'], icon: 'fa-solid fa-percent'},
   ]
 
   get filteredOptions(): MenuOption[] {

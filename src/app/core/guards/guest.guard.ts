@@ -6,12 +6,11 @@ export const guestGuard: CanActivateFn = () => {
     const storage = inject(StorageService);
     const router = inject(Router);
 
-    // Si NO tiene token, puede acceder (es invitado)
-    if (!storage.getToken()) {
+    // Si NO tiene token válido, puede acceder (es invitado)
+    if (!storage.isTokenValid()) {
         return true;
     }
 
-    // Si tiene token (está logeado), redirige a dashboard
-    router.navigate(['/dashboard']);
-    return false;
+    // Si tiene token válido, redirige a dashboard
+    return router.createUrlTree(['/dashboard']);
 }

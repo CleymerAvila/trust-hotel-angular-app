@@ -1,11 +1,11 @@
-import { CustomPayload } from './../models/custompayload.model';
-import { jwtDecode } from 'jwt-decode';
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { jwtDecode } from 'jwt-decode';
+import { BehaviorSubject, Observable, tap } from "rxjs";
+import { User } from '../models/user.model';
+import { CustomPayload } from './../models/custompayload.model';
 import { ApiService } from "./api.service";
 import { StorageService } from "./storage.service";
-import { Router } from "@angular/router";
-import { BehaviorSubject, Observable, tap } from "rxjs";
-import { User} from '../models/user.model';
 
 
 
@@ -48,7 +48,7 @@ export class AuthService {
   }
 
   isLoggeIn(): boolean {
-    return this.storage.getToken() !== null;
+    return this.storage.isTokenValid();
   }
 
   saveUserFromToken(token: string): User | null{

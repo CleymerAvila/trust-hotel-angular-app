@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { guestGuard } from './core/guards/guest.guard';
 import { authGuard } from './core/guards/auth.guard';
+import { guestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'login',
       pathMatch: 'full',
     },
     {
@@ -21,6 +21,6 @@ export const routes: Routes = [
     },
     {
         path : '**',
-        redirectTo : 'dashboard',
+        redirectTo : 'login',
     }
 ];
