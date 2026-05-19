@@ -4,6 +4,7 @@ import { StayingService } from '../staying.service';
 import { Staying } from '../staying.model';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { InvoiceService } from '@features/invoices/invoice.service';
 
 @Component({
   selector: 'app-staying-list',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 export class StayingList {
   isOpen = signal(false);
   private stayingService = inject(StayingService);
+  private invoiceService = inject(InvoiceService);
   stayings = signal<Staying[]>([]);
   router = inject(Router);
   loading = signal(true);
@@ -42,7 +44,7 @@ export class StayingList {
     this.isOpen.set(!this.isOpen)
   }
 
-  redirecToInvoice(finalInvoiceId: number){
+  redirectToInvoice(finalInvoiceId: number){
     if(finalInvoiceId){
       alert('Estadia con factura ID: ' + finalInvoiceId)
       this.router.navigate([`invoices/${finalInvoiceId}`])
@@ -51,10 +53,10 @@ export class StayingList {
     }
   }
 
-  checkOut(stayingId: number){
+  generateFinalInvoice(stayingId: number){
     if(confirm('Desea generar la factura final para la estadia?')){
-      this.stayingService.checkOut(stayingId).subscribe({
-        next: (staying) => {
+      this.invoiceService.generateFinal(stayingId).subscribe({
+        next: () => {
           alert('Factura generada exitosamente')
           this.loadStayings()
         },
@@ -66,9 +68,9 @@ export class StayingList {
     }
   }
 
-  confirmCheckOut(stayingId: number ): void {
+  checkOut(stayingId: number ): void {
     if(confirm('Estas seguro que deseas confirmar el checkOut')){
-      this.stayingService.confirmCheckOut(stayingId).subscribe({
+      this.stayingService.checkOut(stayingId).subscribe({
         next: () => {
           alert('Se realizo el check out satisfactoriamente');
           this.loadStayings();
@@ -77,14 +79,14 @@ export class StayingList {
     }
   }
 
-  revertCheckOut(stayingId: number){
+  revertCheckOut(){
     if(confirm("Estas seguro que desea revertir el ultimo check out")){
       this.stayingService.revertCheckOut().subscribe({
         next:() => {
           alert('Check out revertido correctamente');
           this.loadStayings();
         },
-        
+
       })
     }
   }

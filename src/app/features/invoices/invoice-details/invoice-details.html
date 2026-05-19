@@ -16,7 +16,7 @@
 
             @if (hotel()) {
             <div class="flex items-center justify-between mb-8">
-                
+
                 <div class="flex items-center gap-4">
                     <img src="/logo.png" alt="Hotel Logo" class="w-20 h-20 object-contain rounded-lg">
 
@@ -120,7 +120,7 @@
                 <tbody>
                     @for (p of invoice()?.payments; track p.paymentId) {
                     <tr class="border-t">
-                        <td class="p-2">{{ p.issueDate | date:'short' }}</td>
+                        <td class="p-2">{{ p.issueDate  }}</td>
                         <td class="p-2">${{ p.totalAmount }}</td>
                         <td class="p-2">{{ p.paymentMethod }}</td>
                     </tr>
