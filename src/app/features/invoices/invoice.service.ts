@@ -25,7 +25,7 @@ export class InvoiceService {
     }
 
     generateFinal(stayingId: number): Observable<Invoice> {
-      return this.apiService.post<Invoice>(`${this.endpoint}/new-final`, stayingId);
+      return this.apiService.post<Invoice>(`${this.endpoint}/new-final`, {stayingId});
     }
 
     deleteInvoiceBy(id: number): Observable<void> {

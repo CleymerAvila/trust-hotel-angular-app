@@ -1,14 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
-import { BookingService } from '@features/bookings/services/booking.service';
 import { StayingService } from '../staying.service';
 import { Staying } from '../staying.model';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { InvoiceService } from '@features/invoices/invoice.service';
 
 @Component({
   selector: 'app-staying-list',
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   templateUrl: './staying-list.html',
 })
 export class StayingList {
@@ -75,6 +74,9 @@ export class StayingList {
           alert('Se realizo el check out satisfactoriamente');
           this.loadStayings();
         },
+        error: (error) => {
+          console.error(error);
+        }
       })
     }
   }
