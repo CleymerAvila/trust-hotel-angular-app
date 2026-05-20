@@ -1,0 +1,118 @@
+<!-- Overlay backdrop -->
+<div
+  class="fixed inset-0 bg-black/70 bg-opacity-50 z-40 transition-opacity duration-300"
+  (click)="closeModal()"
+></div>
+
+<!-- Modal -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div
+    class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col transform transition-all duration-300"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Header -->
+    <div class="flex items-center justify-between p-6 border-b border-gray-200">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900">Detalles Factura</h2>
+      </div>
+      <button
+        (click)="closeModal()"
+        class="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+      >
+        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Información de búsqueda -->
+    <!-- <div *ngIf="dateRange" class="px-6 py-3 bg-blue-50 border-b border-blue-200">
+      <p class="text-sm text-blue-800">
+        🔍 Mostrando habitaciones disponibles para {{ getNumberOfNights() }} noche(s)
+      </p>
+    </div> -->
+
+    <!-- Loading State -->
+    @if (isLoading()) {
+      <div class="flex items-center justify-center flex-1">
+        <div class="text-center">
+          <div
+            class="animate-spin inline-block w-12 h-12 border-4 border-gray-300 border-t-blue-600 rounded-full"
+          ></div>
+          <p class="mt-4 text-gray-600 font-medium">Buscando habitaciones disponibles...</p>
+          <p class="text-sm text-gray-500 mt-1">Esto puede tomar unos segundos</p>
+        </div>
+      </div>
+    }
+
+    <div class="flex flex-col max-h-160 overflow-x-auto pb-6">
+      <invoice-details (onInvoiceId)="receiveInvoiceId($event)"> </invoice-details>
+
+      <div class="flex flex-col p-4">
+        <button
+          (click)="toggleAddPaymentOption()"
+          class="bg-green-400 p-3 rounded-xl text-l text-white cursor-pointer m-3 justify-end"
+        >
+          Agregar Pago
+        </button>
+
+        <div [hidden]="hidePaymentOption()" class="w-full flex flex-col items-center justify-center m-2 p-2">
+          <h4 class="font-bold text-2xl text-gray-500 m-4">Registrar Pago</h4>
+          <form id="paymentForm" class="w-[400px] flex flex-col" [formGroup]="paymentForm" (ngSubmit)="onSubmit()" >
+            <label for="paymentMethod">Selecciona Metodo Pago</label>
+            <select  name="paymentMethod" class="outline-1 rounded p-1.5" formControlName="paymentMethod">
+              <option selected value="CASH">EFECTIVO</option>
+              <option value="CREDIT">TARJETA CREDITO</option>
+              <option value="DEBIT">TARJETA DEBITO</option>
+              <option value="PAYPAL">PAYPAL</option>
+              <option value="PSE">PSE</option>
+            </select>
+            <label for="totalAmount">Monto Total</label>
+            <input
+              class="outline-1 rounded p-1.5"
+              type="number"
+              formControlName="totalAmount"
+              id=""
+            />
+            <!-- <div class="flex justify-between mt-4">
+              <button
+                routerLink="/rooms"
+                class="bg-red-600 hover:bg-red-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                class="bg-green-600 hover:bg-green-600/90 text-white px-4 py-3 rounded-2xl cursor-pointer"
+              >
+                Confirmar
+              </button>
+            </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="p-4 border-t border-gray-200 bg-gray-50 flex gap-2">
+      <button
+        (click)="closeModal()"
+        class="flex-1 px-4 py-2.5 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        form="paymentForm"
+        class="flex-1 px-4 py-2.5 border-2 border-blue-300 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors duration-200"
+      >
+        Confirmar
+      </button>
+    </div>
+  </div>
+</div>

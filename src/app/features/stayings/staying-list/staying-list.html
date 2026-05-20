@@ -130,28 +130,29 @@
                 </td>
                 <td class="px-6 py-4 hover:cursor-pointer">
                 </td> -->
-                <td class="px-6 py-4 text-center flex  justify-end">
+                <td class="px-6 py-4 text-center flex gap-2 justify-end">
                   <button
                     type="button"
-                    class="bg-red-100 text-sm cursor-pointer py-3 px-6">
-                    <i class="fa-solid fa-eye text-blue-600"></i>
+                    (click)="checkOut(staying.stayingId)"
+                    class="bg-cyan-200 text-sm cursor-pointer  py-3 px-6 rounded-xl">
+                    <i class="fa-solid fa-calendar-check text-orange-800"></i>
                   </button>
                   <button
                     [disabled]="staying.invoiceId===0"
-                    (click)="redirectToInvoice(staying.invoiceId)"
-                    class="bg-gray-400 text-blue-600  py-3 px-6 cursor-pointer">
+                    [routerLink]="['invoice-payments', staying.invoiceId]"
+                    class="bg-gray-400 text-blue-600  py-3 px-6 cursor-pointer rounded-xl">
                     <i class="fa-solid fa-receipt"></i>
                   </button>
                   <button
                     type="button"
-                    (click)="generateFinalInvoice(staying.bookingId)"
-                    class="bg-blue-300 text-sm cursor-pointer py-3 px-6">
+                    (click)="generateFinalInvoice(staying.stayingId)"
+                    class="bg-blue-300 text-sm cursor-pointer py-3 px-6 rounded-xl">
                     <i class="fa-solid fa-file-circle-plus text-white"></i>
                   </button>
                   <button
                     type="button"
                     (click)="revertCheckOut()"
-                    class="bg-blue-100 text-sm cursor-pointer py-3 px-6">
+                    class="bg-blue-100 text-sm cursor-pointer py-3 px-6 rounded-xl">
                     <i class="fa-solid fa-arrow-rotate-left text-green-500"></i>
                   </button>
                 </td>

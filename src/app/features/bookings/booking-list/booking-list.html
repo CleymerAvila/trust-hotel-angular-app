@@ -119,31 +119,31 @@
                 <td class="px-6 py-4">
                   ${{ booking.advanceDeposit }}
                 </td>
-                <td class="px-5 py-4 text-center flex  justify-end">
+                <td class="px-5 py-4 text-center flex  gap-2 justify-end">
                   <button
                     type="button"
-                    class="bg-gray-300 text-sm py-3 px-6 cursor-pointer text-blue-600  disabled:text-black disabled:cursor-default"
+                    class="bg-gray-300 text-sm py-3 px-6 cursor-pointer text-blue-600  disabled:text-black disabled:cursor-default rounded-xl"
                     [disabled]="booking.invoiceId===0"
-                    (click)="redirecToInvoice(booking.invoiceId)">
+                    [routerLink]="['invoice-payments', booking.invoiceId]"
+                    >
                     <i class="fa-solid fa-receipt ">  </i>
                   </button>
                   <button
                     type="button"
                     (click)="checkIn(booking.bookingId)"
-                    class="bg-green-100 text-sm py-3 px-6 cursor-pointer">
+                    class="bg-green-100 text-sm py-3 px-6 cursor-pointer rounded-xl">
                     <i class="fa-solid fa-bell-concierge text-green-500"></i>
                   </button>
-                  <!-- <a [routerLink]="['/']" class="text-blue-500 font-medium text-fg-brand hover:underline">Detalles</a> -->
                   <button
                     type="button"
                     (click)="generateInvoice(booking.bookingId)"
-                    class="bg-blue-300 text-sm cursor-pointer py-3 px-6">
+                    class="bg-blue-300 text-sm cursor-pointer py-3 px-6 rounded-xl">
                     <i class="fa-solid fa-file-circle-plus text-white"></i>
                   </button>
                   <button
                     type="button"
                     (click)="cancelBooking(booking.bookingId)"
-                    class="bg-red-100 text-sm cursor-pointer py-3 px-6">
+                    class="bg-red-100 text-sm cursor-pointer py-3 px-6 rounded-xl">
                     <i class="fa-solid fa-circle-xmark text-red-600"></i>
                   </button>
                 </td>

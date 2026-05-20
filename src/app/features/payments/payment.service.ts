@@ -30,4 +30,8 @@ export class PaymentService {
   getPaymentById(id: number): Observable<PaymentDTO> {
       return this.apiService.get<PaymentDTO>(`${this.endpoint}/${id}`);
   }
+
+  registerPayment(paymentData: any): Observable<PaymentDTO>{
+    return this.apiService.post<PaymentDTO>(`${this.endpoint}`, paymentData)
+  }
 }
