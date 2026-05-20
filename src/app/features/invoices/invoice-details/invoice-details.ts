@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, output, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InvoiceService } from '../invoice.service';
 import { DatePipe } from '@angular/common';
@@ -26,6 +26,7 @@ export class InvoicesDetails implements OnInit {
 
     invoice = signal<InvoiceDetails | null>(null);
     issueDateFixed = signal<Date | null>(null);
+    onInvoiceId = output<number  | undefined>();
 
     loading = signal(false);
     error = signal(false);
@@ -40,6 +41,7 @@ export class InvoicesDetails implements OnInit {
         const id = Number(this.route.snapshot.paramMap.get('id'));
         this.loadInvoice(id);
         this.loadHotel();
+        this.sendInvoiceId(id);
     }
 
     loadInvoice(id: number) {
@@ -59,6 +61,10 @@ export class InvoicesDetails implements OnInit {
                 this.loading.set(false);
             }
         });
+    }
+
+    sendInvoiceId(invoiceId: number) {
+      this.onInvoiceId.emit(invoiceId);
     }
 
     loadHotel() {
