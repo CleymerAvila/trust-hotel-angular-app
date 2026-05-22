@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '@core/services/auth.service';
 import { DatePipe } from '@angular/common';
-
+import { environment } from '../../../../environments/environment.development';
 @Component({
   selector: 'app-header',
   imports: [DatePipe],
@@ -10,4 +10,5 @@ import { DatePipe } from '@angular/common';
 export class Header {
   authService = inject(AuthService);
   currentDate: Date = new Date();
+  envs = environment;
 }
