@@ -88,12 +88,6 @@
               <th scope="col" class="px-6 py-3 font-medium">
                 Anticipo
               </th>
-              <th scope="col" class="px-6 py-3 font-medium">
-                Factura
-              </th>
-              <th scope="col" class="px-6 py-3 font-medium">
-                CheckIn
-              </th>
               <th scope="col" class="px-6 py-3 font-medium text-right">
                 Acciones
               </th>
@@ -125,16 +119,33 @@
                 <td class="px-6 py-4">
                   ${{ booking.advanceDeposit }}
                 </td>
-                <td class="px-6 py-4 bg-blue-300 hover:cursor-pointer" (click)="redirecToInvoice(booking.invoiceId)">
-                  $ 📄
-                </td>
-                <td class="px-6 py-4 hover:cursor-pointer">
-                  <button type="button" (click)="confirmCheckIn(booking.bookingId)" class="border-green-300 border-2 p-1 rounded-2xl hover:cursor-pointer hover:bg-green-400 hover:text-white text-xs font-bold"> Check in</button>
-                </td>
-                <td class="px-6 py-4 text-right flex gap-4 justify-start">
-                  <!-- <a [routerLink]="['/']" class="text-blue-500 font-medium text-fg-brand hover:underline">Detalles</a> -->
-                  <a (click)="checkIn(booking.bookingId)" class="text-blue-500 font-medium text-fg-brand hover:underline">Generar Factura</a>
-                  <a (click)="cancelBooking(booking.bookingId)" class="text-red-600 font-medium text-fg-brand hover:underline">Cancel</a>
+                <td class="px-5 py-4 text-center flex  gap-2 justify-end">
+                  <button
+                    type="button"
+                    class="bg-gray-300 text-sm py-3 px-6 cursor-pointer text-blue-600  disabled:text-black disabled:cursor-default rounded-xl"
+                    [disabled]="booking.invoiceId===0"
+                    [routerLink]="['invoice-payments', booking.invoiceId]"
+                    >
+                    <i class="fa-solid fa-receipt ">  </i>
+                  </button>
+                  <button
+                    type="button"
+                    (click)="checkIn(booking.bookingId)"
+                    class="bg-green-100 text-sm py-3 px-6 cursor-pointer rounded-xl">
+                    <i class="fa-solid fa-bell-concierge text-green-500"></i>
+                  </button>
+                  <button
+                    type="button"
+                    (click)="generateInvoice(booking.bookingId)"
+                    class="bg-blue-300 text-sm cursor-pointer py-3 px-6 rounded-xl">
+                    <i class="fa-solid fa-file-circle-plus text-white"></i>
+                  </button>
+                  <button
+                    type="button"
+                    (click)="cancelBooking(booking.bookingId)"
+                    class="bg-red-100 text-sm cursor-pointer py-3 px-6 rounded-xl">
+                    <i class="fa-solid fa-circle-xmark text-red-600"></i>
+                  </button>
                 </td>
               </tr>
             }

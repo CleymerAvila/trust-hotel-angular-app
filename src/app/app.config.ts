@@ -11,7 +11,6 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(
       routes,
-      withDebugTracing(),
       withRouterConfig({ onSameUrlNavigation: 'reload' })
     ),
     provideHttpClient(withInterceptors([authInterceptor])),

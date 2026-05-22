@@ -3,24 +3,32 @@ import { HttpClient } from '@angular/common/http';
 import { Invoice } from './invoice.model';
 import { Observable } from 'rxjs';
 import { InvoiceDetails } from './invoice-details/invoice-details.model';
+import { ApiService } from '@core/services/api.service';
 
 @Injectable({ providedIn: 'root' })
 export class InvoiceService {
 
-    private http = inject(HttpClient);
-    private baseUrl = 'http://localhost:8080/api/v1/invoices';
+  private endpoint = '/invoices'
+
+  private apiService = inject(ApiService);
 
     getInvoices(): Observable<Invoice[]> {
-        return this.http.get<Invoice[]>(this.baseUrl);
+        return this.apiService.get<Invoice[]>(this.endpoint);
     }
 
     getInvoiceDetails(id: number) {
-        return this.http.get<InvoiceDetails>(`${this.baseUrl}/${id}/details`);
+        return this.apiService.get<InvoiceDetails>(`${this.endpoint}/${id}/details`);
     }
 
+    generateInitial(bookingId: number): Observable<Invoice> {
+      return this.apiService.post<Invoice>(`${this.endpoint}/new-initial`, {bookingId} )
+    }
 
+    generateFinal(stayingId: number): Observable<Invoice> {
+      return this.apiService.post<Invoice>(`${this.endpoint}/new-final`, {stayingId});
+    }
 
     deleteInvoiceBy(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.baseUrl}/${id}`);
+        return this.apiService.delete<void>(`${this.endpoint}/${id}`);
     }
 }
