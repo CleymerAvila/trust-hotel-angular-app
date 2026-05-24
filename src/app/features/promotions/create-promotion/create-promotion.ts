@@ -17,19 +17,19 @@ export class CreatePromotion {
   createForm: FormGroup;
 
   promotionTypes = [
-    'DISCOUNT',
-    'EXTRA_SERVICES',
-    'EXTRA_NIGHTS',
-    'PACK',
-    'ADVANCE_BOOKING',
-    'UPGRADE',
-    'PARTNER',
-    'LONG_STAY',
-    'SPECIAL_EVENT',
-    'PER_SEASON'
+    'Descuento',
+    'Servicios Extra',
+    'Noches Extra',
+    'Páquete',
+    'Adelanto Reserva',
+    'Ascenso de Categoria',
+    'Patrocinio',
+    'Estadía Duradera',
+    'Evento Especial',
+    'Por Temporada'
   ];
 
-  promotionStatus = ['ACTIVE', 'INACTIVE', 'PENDING'];
+  promotionStatus = ['Activo', 'Inactivo', 'Pendiente'];
 
   constructor() {
     this.createForm = this.fb.group({
