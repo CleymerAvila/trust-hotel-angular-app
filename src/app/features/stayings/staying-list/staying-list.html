@@ -120,7 +120,7 @@
                   {{ staying.checkOutDate  | date:'dd.MM.yy' }}
                 </td>
                 <td class="px-6 py-4">
-                  {{ staying.status}}
+                  <span [appStatusBadge]="staying.status"></span>
                 </td>
                 <td class="px-6 py-4">
                   ${{ staying.totalAmount }}

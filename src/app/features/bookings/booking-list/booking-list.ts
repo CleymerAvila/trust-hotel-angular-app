@@ -1,19 +1,23 @@
+// import { BADGE_CONFIG, BadgeStatus } from './../../../core/models/status-badge.model';
 import { Component, inject, signal } from '@angular/core';
 import { BookingService } from '../services/booking.service';
 import { Booking } from '../booking.model';
 import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { InvoiceService } from '@features/invoices/invoice.service';
+import { NotificationService } from '@core/services/notification.service';
+import { StatusBadgeDirective } from '@shared/directives/status-badge.directive';
 
 @Component({
   selector: 'app-booking-list',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, StatusBadgeDirective],
   templateUrl: './booking-list.html',
 })
 export class BookingList {
   isOpen = signal(false);
   private bookingService = inject(BookingService);
-  private invoiceService = inject(InvoiceService)
+  private invoiceService = inject(InvoiceService);
+  private notify = inject(NotificationService);
   bookings = signal<Booking[]>([]);
   router = inject(Router);
 
@@ -71,11 +75,11 @@ export class BookingList {
     if(confirm('Desea generar la factura para la estadia?')){
       this.invoiceService.generateInitial(bookingId).subscribe({
         next: () => {
-          alert('Factura generada exitosamente')
+          this.notify.success('Factura Generada', 'La factura fue creada exitosamente');
           this.loadBookings()
         },
         error : (error) => {
-          alert('Error al generar la factura')
+          this.notify.error('Factura Sin Generar', error?.error?.message)
           console.error(error, 'error trying to create invoice')
         }
       })
@@ -86,11 +90,11 @@ export class BookingList {
     if(confirm('Estas seguro que deseas confirmar el checkIn')){
       this.bookingService.checkIn(bookingId).subscribe({
         next: (booking) => {
-          alert("Check In realizado satisfactoriamente")
+          this.notify.success('CheckIn Exitoso', 'El Check-In fue registrado satisfactoriamente');
           this.loadBookings();
         },
         error: (error) => {
-          alert('Error al realizar check in de la reserva')
+          this.notify.error('CheckIn Invalido', error?.error?.message);
           console.error(error, 'error trying to make check in')
         }
       })
@@ -101,12 +105,12 @@ export class BookingList {
     if(confirm('Estas seguro que desea cancelar la reservacion? la accion es irreversible')){
       this.bookingService.cancelBooking(bookingId).subscribe({
         next: (booking) => {
-          alert('Reserva cancelada exitosamente');
+          this.notify.warning('Reserva Cancelada', 'La reserva ha sido cancelada ')
           this.loadBookings()
         },
         error: (error) => {
-          alert('Error al eliminar la reserva')
-          console.log(error, 'error canceling booking')
+          this.notify.error('Cancelación Reserva Invalida', error?.error?.message);
+          console.error(error, 'error canceling booking')
         }
       })
     }

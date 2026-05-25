@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Hotel } from '@core/models/hotel.model';
 import { HotelService } from '@core/services/hotel.service';
 import { EmployeeService } from '../employee.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-create-employee',
@@ -15,6 +16,7 @@ export class CreateEmployee implements OnInit, OnDestroy{
   private hotelSubscription?: any;
   hotelService = inject(HotelService);
   employeeService = inject(EmployeeService);
+  notify = inject(NotificationService);
   route = inject(Router);
   desactived = false;
 
@@ -60,11 +62,13 @@ export class CreateEmployee implements OnInit, OnDestroy{
         next: (employee) => {
           this.createForm.reset();
           console.log('Empleado creado exitosamente:', employee);
-          alert('Empleado creado exitosamente');
+          this.notify.success('Empleado Guardado', 'El registro fue creado exitosamente');
           this.route.navigate(['/employees']);
         },
         error: (error) => {
-          alert('Error al crear el empleado');
+          console.error(error)
+          this.notify.error('Error al Crear Empleado', error?.error?.message);
+          // alert('Error al crear el empleado');
         }
       });
     }

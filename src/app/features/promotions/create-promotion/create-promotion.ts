@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { PromotionService } from '../promotion.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-create-promotion',
@@ -11,6 +12,7 @@ import { PromotionService } from '../promotion.service';
 })
 export class CreatePromotion {
   private promotionService = inject(PromotionService);
+  private notify = inject(NotificationService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
 
@@ -47,11 +49,10 @@ export class CreatePromotion {
     if (this.createForm.valid) {
       this.promotionService.createPromotion(this.createForm.value).subscribe({
         next: () => {
-          alert('Promoción creada exitosamente');
+          this.notify.success('Promocion Guardada', 'La promoción fue registrada exitosamente');
           this.router.navigate(['/promotions']);
         },
         error: (err) => {
-          alert('Error al crear promoción');
           console.log(err);
         }
       });

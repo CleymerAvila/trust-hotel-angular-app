@@ -17,3 +17,18 @@
     width: 100%;
   }
 }
+
+
+:root {
+  --notif-bg:             #ffffff;
+  --notif-text-primary:   #111827;
+  --notif-text-secondary: #6b7280;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --notif-bg:             #1f2937;
+    --notif-text-primary:   #f9fafb;
+    --notif-text-secondary: #9ca3af;
+  }
+}

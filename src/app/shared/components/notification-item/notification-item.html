@@ -1,0 +1,45 @@
+<div
+      class="notification"
+      [ngClass]="[notification().type, visible() ? 'visible' : 'hidden']"
+      role="alert"
+      [attr.aria-live]="notification().type === 'error' ? 'assertive' : 'polite'"
+    >
+      <div class="notification__border"></div>
+
+      <div class="notification__icon" [innerHTML]="icon()"></div>
+
+      <div class="notification__content">
+        <p class="notification__title">{{ notification().title }}</p>
+        <p class="notification__message">{{ notification().message }}</p>
+
+        @if (notification().action) {
+          <button
+            class="notification__action"
+            type="button"
+            (click)="onAction()"
+          >
+            {{ notification().action!.label }}
+          </button>
+        }
+      </div>
+
+      <button
+        class="notification__close"
+        type="button"
+        aria-label="Cerrar notificación"
+        (click)="onDismiss()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      @if (notification().duration && notification().duration! > 0) {
+        <div class="notification__progress">
+          <div
+            class="notification__progress-bar"
+            [style.animation-duration.ms]="notification().duration"
+          ></div>
+        </div>
+      }
+    </div>

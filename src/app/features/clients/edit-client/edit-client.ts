@@ -3,6 +3,7 @@ import { Client } from '../client.model';
 import { ClientService } from '../client.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-edit-client',
@@ -13,6 +14,7 @@ export class EditClient {
   clientToEdit: Client | null = null;
 
   clientService = inject(ClientService);
+  notify = inject(NotificationService);
   route = inject(Router);
   activedRoute = inject(ActivatedRoute);
   clientId: number = 0;
@@ -31,6 +33,7 @@ export class EditClient {
       next: (client) => {
         this.clientToEdit = client;
         console.log('Cliente a editar:', client);
+        this.notify.info('Cliente Cargado', 'La información de cliente fue obtenida satisfactoriamente');
         this.editForm.setValue({
           email: client.email,
           address: client.address,

@@ -4,16 +4,19 @@ import { Staying } from '../staying.model';
 import { DatePipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { InvoiceService } from '@features/invoices/invoice.service';
+import { StatusBadgeDirective } from "@shared/directives/status-badge.directive";
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-staying-list',
-  imports: [DatePipe, RouterLink],
+  imports: [DatePipe, RouterLink, StatusBadgeDirective],
   templateUrl: './staying-list.html',
 })
 export class StayingList {
   isOpen = signal(false);
   private stayingService = inject(StayingService);
   private invoiceService = inject(InvoiceService);
+  private notify = inject(NotificationService);
   stayings = signal<Staying[]>([]);
   router = inject(Router);
   loading = signal(true);
@@ -56,11 +59,11 @@ export class StayingList {
     if(confirm('Desea generar la factura final para la estadia?')){
       this.invoiceService.generateFinal(stayingId).subscribe({
         next: () => {
-          alert('Factura generada exitosamente')
+          this.notify.success('Factura Generada', 'La factura fue registrada exitosamente')
           this.loadStayings()
         },
         error : (error) => {
-          alert('Error al generar la factura')
+          this.notify.error('Error al Generar Factura', error?.error?.message);
           console.error(error, 'error trying to create invoice')
         }
       })
@@ -71,10 +74,11 @@ export class StayingList {
     if(confirm('Estas seguro que deseas confirmar el checkOut')){
       this.stayingService.checkOut(stayingId).subscribe({
         next: () => {
-          alert('Se realizo el check out satisfactoriamente');
+          this.notify.success('Check Out Exitoso', 'El check out fue registrado exitosamente')
           this.loadStayings();
         },
         error: (error) => {
+          this.notify.error('Error al realizar Check Out' , error?.error?.message)
           console.error(error);
         }
       })
@@ -88,7 +92,9 @@ export class StayingList {
           alert('Check out revertido correctamente');
           this.loadStayings();
         },
-
+        error: (error) => {
+          this.notify.error('Error al revertir Check Out', error?.error?.message)
+        }
       })
     }
   }
