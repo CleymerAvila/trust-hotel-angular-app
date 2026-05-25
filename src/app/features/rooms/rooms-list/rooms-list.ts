@@ -3,6 +3,7 @@ import { RouterLink } from "@angular/router";
 import { RoomService } from '../room.service';
 import { Room } from '../room.model';
 import { CurrencyPipe } from '@angular/common';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-rooms-list',
@@ -12,6 +13,7 @@ import { CurrencyPipe } from '@angular/common';
 export class RoomsList {
   isOpen = signal(false)
   private roomService = inject(RoomService);
+  private nofify = inject(NotificationService);
 
   rooms = signal<Room[]>([]);
 
@@ -43,11 +45,11 @@ export class RoomsList {
     if (confirm('¿Estás seguro de que deseas eliminar esta habitación?')) {
       this.roomService.deleteRoomBy(roomId).subscribe({
         next: () => {
-          alert('Habitación eliminada exitosamente.');
+          this.nofify.warning('Habitación Eliminada', 'La habitación ha sido eliminada exitosamente');
           this.loadRooms();
         },
         error: (err) => {
-          alert('Error al eliminar la habitación asegurese que la habitacion se encuentre libre.');
+          // this.nofify.error('Error al Eliminar Habitación', err?.error?.message);
           console.log(err, 'error deleting room');
         }
       });

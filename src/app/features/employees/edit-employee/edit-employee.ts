@@ -3,6 +3,7 @@ import { Employee } from '../employee.model';
 import { EmployeeService } from '../employee.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-edit-employee',
@@ -13,6 +14,7 @@ export class EditEmployee {
   employeeToEdit: Employee | null = null;
   employeeService = inject(EmployeeService);
   activedRoute = inject(ActivatedRoute);
+  notify = inject(NotificationService);
   route = inject(Router);
   employeeId: number = 0;
 
@@ -35,6 +37,7 @@ export class EditEmployee {
       next: (employee) => {
         this.employeeToEdit = employee;
         console.log('Empleado a editar:', employee);
+        this.notify.info('Empleado Cargado', 'El empleado fue cargado exitosamente');
 
         this.editForm.setValue({
           email: employee.email,
@@ -48,7 +51,7 @@ export class EditEmployee {
         });
       },
       error: (error) => {
-        alert('Error al obtener el empleado');
+        // alert('Error al obtener el empleado');
         console.error('Error al obtener el empleado:', error);
         this.route.navigate(['/employees']);
       }
@@ -77,12 +80,12 @@ export class EditEmployee {
       // Aqui puedes agregar la logica para enviar los datos al servidor
       this.employeeService.updateEmployee(this.employeeId, employeeData).subscribe({
         next: (employee) => {
-          alert('Empleado editado con exito');
           console.log('Empleado editado con exito:', employee);
+          this.notify.success('Empleado Guardado', 'El registro fue actualizado satisfactoriamente')
           this.route.navigate(['/employees']);
         },
         error: (error) => {
-          alert('Error al editar el empleado');
+          // alert('Error al editar el empleado');
           console.error('Error al editar el empleado:', error);
         }
       })

@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { NotificationService } from '@core/services/notification.service';
 import { RoomService } from '@features/rooms/room.service';
 import { CardHotelStatusComponent } from "@shared/components/dashboard-data/card-hotel-status/card-hotel-status";
 import { CardMonthlyRevenueComponent } from "@shared/components/dashboard-data/card-monthly-revenue/card-monthly-revenue";
@@ -21,6 +22,7 @@ import { DashboardService } from 'src/app/core/services/dashboard.service';
 })
 export class Dashboard implements OnInit {
 
+  private notify = inject(NotificationService);
   reservasPorTipoData = {
     SINGLE: 0,
     DOUBLE: 0,
@@ -82,6 +84,7 @@ export class Dashboard implements OnInit {
       // Empleados activos
       this.empleadosActivos = data.activeEmployees;
 
+      this.notify.info('Dashboard Cargado', 'Se obtuvieron los datos correctamente');
       this.cdr.detectChanges();
     },
     error: err => {

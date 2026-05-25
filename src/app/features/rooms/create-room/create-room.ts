@@ -4,6 +4,7 @@ import { Router, RouterLink } from "@angular/router";
 import { Hotel } from '@core/models/hotel.model';
 import { HotelService } from '@core/services/hotel.service';
 import { RoomService } from '../room.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-create-room',
@@ -15,6 +16,7 @@ export class CreateRoom implements OnInit, OnDestroy {
   private hotelSubscription?: any;
   hotelService = inject(HotelService);
   roomService = inject(RoomService);
+  notify = inject(NotificationService);
   route = inject(Router)
   desactived = signal(false);
 
@@ -57,7 +59,7 @@ export class CreateRoom implements OnInit, OnDestroy {
         next: (room) => {
           // console.log('Habitacion creada exitosamente:', room);
           this.createForm.reset();
-          alert('Habitacion creada exitosamente');
+          this.notify.success('Habitación Guardada', 'La habitación ha sido guardada exitosamente');
           this.route.navigate(['/rooms']);
         },
         error: (error) => {

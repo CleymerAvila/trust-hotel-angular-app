@@ -3,6 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PromotionService } from '../promotion.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-edit-promotion',
@@ -11,6 +12,7 @@ import { PromotionService } from '../promotion.service';
 })
 export class EditPromotion {
   private promotionService = inject(PromotionService);
+  private notify = inject(NotificationService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private fb = inject(FormBuilder);
@@ -57,12 +59,12 @@ export class EditPromotion {
           next: (p) => {
             console.log('Promotion loaded:', p);
             this.editForm.patchValue(p);
+            this.notify.info('Promotion Cargada', 'La promoción ha sido cargada exitosamente');
             this.loading.set(false);
           },
           error: (err) => {
             console.error('Error loading promotion:', err);
             this.loading.set(false);
-            alert('Error al cargar la promoción');
           }
         });
       }
@@ -73,11 +75,10 @@ export class EditPromotion {
     if (this.editForm.valid && this.promotionId) {
       this.promotionService.updatePromotion(this.promotionId, this.editForm.value).subscribe({
         next: () => {
-          alert('Promoción actualizada exitosamente');
+          this.notify.success('Promoción Actualizada', 'La promoción ha sido actualizada satisfactorimente');
           this.router.navigate(['/promotions']);
         },
         error: (err) => {
-          alert('Error al actualizar promoción');
           console.error(err);
         }
       });

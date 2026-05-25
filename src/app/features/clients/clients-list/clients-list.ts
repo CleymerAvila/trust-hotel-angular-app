@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ClientService } from '../client.service';
 import { Client } from '../client.model';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-clients-list',
@@ -11,6 +12,7 @@ import { Client } from '../client.model';
 export class ClientsList {
   isOpen = signal(false);
   private clientService = inject(ClientService);
+  private notify = inject(NotificationService);
 
   clients = signal<Client[]>([]);
 
@@ -45,11 +47,11 @@ export class ClientsList {
     if(confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
       this.clientService.deleteClientBy(clientId).subscribe({
         next: () => {
-          alert('Cliente eliminado exitosamente.');
+          this.notify.warning('Cliente Eliminado', 'El Cliente fue eliminado exitosamente')
           this.loadClients();
         },
         error: (err) => {
-          alert('Error al eliminar el cliente asegurese que el cliente no tenga reservas asociadas.');
+          this.notify.error('Error al Eliminar Cliente', err?.error?.message)
           console.log(err, 'error deleting client');
         }
       });

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { NotificationService } from '@core/services/notification.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface SelectedClient {
@@ -28,14 +29,19 @@ export class BookingFormService {
   selectedRoom$: Observable<SelectedRoom | null> = this.selectedRoomSubject.asObservable();
   dateRange$: Observable<DateRange | null> = this.dateRangeSubject.asObservable();
 
+
+  private notify = inject(NotificationService);
+
   // Métodos para actualizar (escritura)
   setSelectedClient(client: SelectedClient): void {
     console.log('Cliente seleccionado en servicio:', client);
+    this.notify.info('Cliente Seleccionado', 'El cliente fue seleccionado y registrado en el formulario')
     this.selectedClientSubject.next(client);
   }
 
   setSelectedRoom(room: SelectedRoom): void {
     console.log('Habitación seleccionada en servicio:', room);
+    this.notify.info('Habitación Seleccionada', 'La habitación fue seleccionada y registrada en el formulario')
     this.selectedRoomSubject.next(room);
   }
 

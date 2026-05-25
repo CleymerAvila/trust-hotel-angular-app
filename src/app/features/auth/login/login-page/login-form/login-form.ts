@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '@core/services/auth.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-login-form',
@@ -12,6 +13,7 @@ import { AuthService } from '@core/services/auth.service';
 export class LoginForm {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private notify = inject(NotificationService);
 
   email = '';
   password = '';
@@ -26,6 +28,7 @@ export class LoginForm {
       next: () => {
         this.loading = false;
         this.router.navigate(['/dashboard']);
+        this.notify.info('Inición Sesión', 'Ha iniciado sesión satisfactoriamente');
       },
       error: (err) => {
         this.loading = false;

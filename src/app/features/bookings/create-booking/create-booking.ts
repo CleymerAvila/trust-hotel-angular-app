@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BookingFormService, SelectedClient, SelectedRoom } from '../services/booking-form.service';
 import { Subject, takeUntil } from 'rxjs';
 import { BookingService } from '../services/booking.service';
+import { NotificationService } from '@core/services/notification.service';
 
 
 
@@ -18,6 +19,7 @@ export class CreateBooking implements OnInit, OnDestroy {
   private router = inject(Router);
   private bookingFormServive = inject(BookingFormService);
   private bookingService = inject(BookingService);
+  private notify = inject(NotificationService);
   private route = inject(ActivatedRoute);
 
   bookingForm!: FormGroup;
@@ -121,13 +123,13 @@ export class CreateBooking implements OnInit, OnDestroy {
     this.bookingService.createBooking(bookingData).subscribe({
       next: (booking) => {
         this.bookingForm.reset();
-        alert('La reservacion ha sido creada con exito');
+        this.notify.success('Reservación Guardada', 'El registro fue creado existosamente');
         this.bookingFormServive.clearClient();
         this.router.navigate(['bookings'])
       },
       error: (error) => {
         console.error('Error al crear la reserva:', error);
-        alert('Error al crear la reserva. Por favor, intenta de nuevo.');
+        // alert('Error al crear la reserva. Por favor, intenta de nuevo.');
       }
     })
   }

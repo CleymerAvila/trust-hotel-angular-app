@@ -3,6 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EmployeeService } from '../employee.service';
 import { Employee } from '../employee.model';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -12,6 +13,7 @@ import { Employee } from '../employee.model';
 export class EmployeesList {
   isOpen = signal(false)
   private employeeService = inject(EmployeeService);
+  private notify = inject(NotificationService);
 
   employees = signal<Employee[]>([]);
 
@@ -43,11 +45,11 @@ export class EmployeesList {
     if(confirm('¿Estás seguro de que deseas eliminar este empleado?')) {
       this.employeeService.deleteEmployeeBy(employeeId).subscribe({
         next: () => {
-          alert('Empleado eliminado exitosamente.');
+          this.notify.warning('Empleado Eliminado ', 'El empleado fue borrado de los registros exitosamente');
           this.loadEmployees();
         },
         error: (err) => {
-          alert('Error al eliminar el empleado asegurese que el empleado no tenga reservas asociadas.');
+          this.notify.error('Error eliminando Empleado', err?.error?.message);
           console.log(err, 'error deleting employee');
         }
       });
