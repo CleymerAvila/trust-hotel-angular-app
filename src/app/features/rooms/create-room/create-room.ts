@@ -21,7 +21,7 @@ export class CreateRoom implements OnInit, OnDestroy {
   createForm = new FormGroup({
     number: new FormControl('', Validators.required),
     type: new FormControl('PERSONAL', Validators.required),
-    currentState: new FormControl({ value: 'LIBRE', disabled: true }, Validators.required),
+    currentState: new FormControl({ value: 'Libre', disabled: false }, Validators.required),
     floor: new FormControl('', Validators.required),
     capacity: new FormControl('', Validators.required),
     pricePerNight: new FormControl('', Validators.required),
@@ -46,6 +46,7 @@ export class CreateRoom implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.createForm.valid) {
+      this.createForm.get
       const roomData = {
         ...this.createForm.value,
         hotelId: this.currentHotel?.hotelId
