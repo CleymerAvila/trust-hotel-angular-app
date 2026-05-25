@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ClientService } from '../client.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-create-client',
@@ -10,6 +11,7 @@ import { ClientService } from '../client.service';
 })
 export class CreateClient {
   clientService = inject(ClientService);
+  notify = inject(NotificationService);
   route = inject(Router);
 
   createForm = new FormGroup( {
@@ -32,12 +34,12 @@ export class CreateClient {
       this.clientService.createCliente(clientData).subscribe({
         next: (client) => {
           this.createForm.reset();
-          alert('Cliente creado exitosamente');
+          this.notify.success('Cliente Guardado', 'El cliente fue registrado exitosamente');
           this.route.navigate(['/clients']);
         },
         error: (error) => {
           console.error('Error al crear cliente:', error);
-          alert('Error al crear cliente. Por favor, intenta de nuevo.');
+          this.notify.error('Error Creando Cliente', error?.error?.message);
         }
       });
     }

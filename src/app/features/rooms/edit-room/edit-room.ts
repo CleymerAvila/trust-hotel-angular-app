@@ -3,6 +3,7 @@ import { Component, inject} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { RoomService } from '../room.service';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-edit-room',
@@ -13,6 +14,7 @@ export class EditRoom {
   roomToEdit : Room | null = null;
   // hotelService = inject(HotelService);
   roomService = inject(RoomService);
+  notify = inject(NotificationService);
   route = inject(Router);
   activeRoute = inject(ActivatedRoute);
   roomId: number = 0;
@@ -41,9 +43,9 @@ export class EditRoom {
           capacity: room.capacity,
           pricePerNight: room.pricePerNight
         });
+        this.notify.info('Habitación Cargada', 'La habitación fue cargada exitosamente');
       },
       error: (error) => {
-        alert('Error al obtener la habitacion');
         console.error('Error al obtener la habitacion:', error);
         this.route.navigate(['/rooms']);
       }
@@ -57,12 +59,11 @@ export class EditRoom {
         ...this.editForm.value,
       };
       console.log('Datos de la habitacion a editar:', roomData);
-      // Aqui puedes agregar la logica para enviar los datos al servidor
       this.roomService.editRoom(this.roomId, roomData).subscribe({
         next: (room) => {
            console.log('Habitacion creada exitosamente:', room);
           this.editForm.reset();
-          alert('Habitacion actualizada exitosamente');
+          this.notify.success('Habitación Actualizada', 'La habitación fue registrada exitosamente');
           this.route.navigate(['/rooms']);
         },
         error: (error) => {

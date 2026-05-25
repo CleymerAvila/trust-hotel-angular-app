@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from '@features/rooms/room.service';
 import { BookingFormService } from '../services/booking-form.service';
 import { Room } from '@features/rooms/room.model';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-select-room',
@@ -17,7 +18,7 @@ export class SelectRoom {
   private activatedRoute = inject(ActivatedRoute);
   private roomService = inject(RoomService);
   private bookingFormService = inject(BookingFormService);
-
+  private notify = inject(NotificationService);
 
   availableRooms = signal<Room[]>([]);
   isLoading = signal(false);
@@ -44,6 +45,7 @@ export class SelectRoom {
       next: (rooms) => {
         console.log('habitaciones desde el back', rooms)
         this.availableRooms.set(rooms);
+        this.notify.info('Habitaciones Cargadas', 'Los datos de las habitaciones fue obtenida correctamente')
         this.isLoading.set(false);
       },
       error: (error) => {

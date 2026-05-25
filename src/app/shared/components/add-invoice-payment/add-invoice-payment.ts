@@ -4,6 +4,7 @@ import { InvoicesDetails } from '@features/invoices/invoice-details/invoice-deta
 import { InvoiceService } from '@features/invoices/invoice.service';
 import { PaymentService } from '@features/payments/payment.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-add-invoice-payment',
@@ -15,6 +16,7 @@ export class AddInvoicePayment implements OnInit{
 
   invoiceService: InvoiceService = inject(InvoiceService);
   paymentsService: PaymentService = inject(PaymentService);
+  notify: NotificationService = inject(NotificationService);
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
 
@@ -68,7 +70,7 @@ export class AddInvoicePayment implements OnInit{
       this.paymentsService.registerPayment(this.paymentForm.value).subscribe({
         next: (payment) => {
           console.log(payment);
-          alert('Pago realizado con exito')
+          this.notify.success('Pago Registrado', 'El pago fue creado exitosamente');
           this.ngOnInit();
           this.paymentForm.reset();
           this.closeModal();

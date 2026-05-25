@@ -3,13 +3,15 @@ import { RouterModule } from '@angular/router';
 import { InvoiceService } from '../invoice.service';
 import { Invoice } from '../invoice.model';
 import { CurrencyPipe } from '@angular/common';
+import { StatusBadgeDirective } from "@shared/directives/status-badge.directive";
 
 @Component({
     selector: 'app-invoices-list',
     imports: [
-        CurrencyPipe,
-        RouterModule
-    ],
+    CurrencyPipe,
+    RouterModule,
+    StatusBadgeDirective
+],
     templateUrl: './invoice-list.html'
 })
 export class InvoicesList {

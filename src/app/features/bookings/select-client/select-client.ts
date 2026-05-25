@@ -5,6 +5,7 @@ import { BookingFormService } from '../services/booking-form.service';
 import { Client } from '@features/clients/client.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-select-client',
@@ -15,6 +16,7 @@ export class SelectClient implements OnInit{
   private router = inject(Router);
   private clientService = inject(ClientService);
   private bookingFormService = inject(BookingFormService);
+  private notify = inject(NotificationService);
   private route = inject(ActivatedRoute);
 
   clients = signal<Client[]>([]);
@@ -32,6 +34,7 @@ export class SelectClient implements OnInit{
       next: (clients) => {
         this.clients.set(clients);
         this.filteredClients.set(clients);
+        this.notify.info('Clientes Cargados', 'Los datos de los clientes han sido obtenidos correctamente')
         this.isLoading.set(false);
       },
       error: (error) => {

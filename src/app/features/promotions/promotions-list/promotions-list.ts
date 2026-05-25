@@ -3,6 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { PromotionService } from '../promotion.service';
 import { Promotion } from '../promotion.model';
+import { NotificationService } from '@core/services/notification.service';
 
 @Component({
   selector: 'app-promotions-list',
@@ -11,6 +12,7 @@ import { Promotion } from '../promotion.model';
 })
 export class PromotionsList {
   private promotionService = inject(PromotionService);
+  private notify = inject(NotificationService);
 
   promotions = signal<Promotion[]>([]);
   loading = signal(true);
@@ -41,11 +43,11 @@ export class PromotionsList {
     if (confirm('¿Estás seguro de que deseas eliminar esta promoción?')) {
       this.promotionService.deletePromotionBy(promotionId).subscribe({
         next: () => {
-          alert('Promoción eliminada exitosamente.');
+          this.notify.warning('Promoción Eliminada', 'La promoción ha sido eliminina exitosamente');
           this.loadPromotions();
         },
         error: (err) => {
-          alert('Error al eliminar la promoción.');
+          this.notify.error('Error al eliminar promoción', err?.error?.message);
           console.log(err, 'error deleting promotion');
         }
       });
