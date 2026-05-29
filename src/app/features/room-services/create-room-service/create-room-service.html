@@ -1,0 +1,98 @@
+<div class="max-w-2xl mx-auto m-5 p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+  <div class="mb-6 border-b border-slate-100 pb-4">
+    <h4 class="font-bold text-2xl text-slate-700">Registrar Servicio de Habitación</h4>
+    <p class="text-sm text-slate-500 mt-1">Completa los siguientes campos para registrar un nuevo servicio para los huéspedes.</p>
+  </div>
+
+  <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="space-y-5">
+    <!-- Nombre -->
+    <div class="flex flex-col gap-1.5">
+      <label for="name" class="text-sm font-semibold text-slate-700">Nombre del Servicio</label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        placeholder="Ej. Desayuno Continental, Limpieza Profunda"
+        class="w-full outline-hidden border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
+      />
+      @if (createForm.get('name')?.touched && createForm.get('name')?.invalid) {
+        <span class="text-xs text-red-600 font-medium">El nombre es requerido y no debe exceder los 100 caracteres.</span>
+      }
+    </div>
+
+    <!-- Tipo de Servicio -->
+    <div class="flex flex-col gap-1.5">
+      <label for="type" class="text-sm font-semibold text-slate-700">Categoría del Servicio</label>
+      <select
+        id="type"
+        formControlName="type"
+        class="w-full outline-hidden border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-white"
+      >
+        @for (typeKey of serviceTypes | keyvalue; track typeKey.key) {
+          <option [value]="typeKey.key">{{ typeKey.value }}</option>
+        }
+      </select>
+      @if (createForm.get('type')?.touched && createForm.get('type')?.invalid) {
+        <span class="text-xs text-red-600 font-medium">Debe seleccionar una categoría.</span>
+      }
+    </div>
+
+    <!-- Precio -->
+    <div class="flex flex-col gap-1.5">
+      <label for="price" class="text-sm font-semibold text-slate-700">Precio (COP)</label>
+      <div class="relative">
+        <span class="absolute left-4 top-2.5 text-slate-400 font-semibold">$</span>
+        <input
+          id="price"
+          type="number"
+          formControlName="price"
+          placeholder="0.00"
+          min="1"
+          step="0.01"
+          class="w-full outline-hidden border border-slate-300 rounded-xl pl-8 pr-4 py-2.5 text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
+        />
+      </div>
+      @if (createForm.get('price')?.touched && createForm.get('price')?.invalid) {
+        <span class="text-xs text-red-600 font-medium">El precio es requerido y debe ser mayor o igual a 1 USD.</span>
+      }
+    </div>
+
+    <!-- Descripción -->
+    <div class="flex flex-col gap-1.5">
+      <label for="description" class="text-sm font-semibold text-slate-700">Descripción</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        placeholder="Detalla en qué consiste el servicio..."
+        rows="3"
+        class="w-full outline-hidden border border-slate-300 rounded-xl px-4 py-2.5 text-slate-800 placeholder-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 resize-none"
+      ></textarea>
+      @if (createForm.get('description')?.touched && createForm.get('description')?.invalid) {
+        <span class="text-xs text-red-600 font-medium">La descripción es requerida y no debe exceder los 200 caracteres.</span>
+      }
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 mt-6">
+      <button
+        type="button"
+        routerLink="/room-services"
+        class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-5 rounded-xl cursor-pointer transition duration-200"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        [disabled]="createForm.invalid || loading()"
+        class="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-5 rounded-xl cursor-pointer transition duration-200 flex items-center gap-2"
+      >
+        @if (loading()) {
+          <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+          Guardando...
+        } @else {
+          Confirmar
+        }
+      </button>
+    </div>
+  </form>
+</div>

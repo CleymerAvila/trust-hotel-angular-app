@@ -1,0 +1,117 @@
+<div class="flex flex-col m-5 p-4 overflow-y-hidden">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+    <div>
+      <h4 class="font-bold text-2xl text-slate-700">Servicios de Habitación</h4>
+      <p class="text-sm text-slate-500 mt-1">Administra los servicios de habitaciones, alimentación, limpieza y mantenimiento disponibles.</p>
+    </div>
+    <div class="flex flex-wrap gap-3 mt-4 md:mt-0">
+      <button [routerLink]="['requests']" class="bg-indigo-600 hover:bg-indigo-700 cursor-pointer text-white font-medium py-2 px-4 rounded-xl transition duration-200 shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-clipboard-list"></i>
+        Ver Solicitudes de Servicio
+      </button>
+      <button [routerLink]="['create']" class="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white font-medium py-2 px-4 rounded-xl transition duration-200 shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-plus"></i>
+        Agregar Servicio
+      </button>
+    </div>
+  </div>
+
+  @if(loading()){
+    <div class="flex items-center justify-center py-12">
+      <div class="text-center">
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-2"></div>
+        <p class="text-slate-500 font-medium">Cargando servicios de habitación...</p>
+      </div>
+    </div>
+  }
+
+  @if(error()){
+    <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl mb-6">
+      <div class="flex items-center gap-2 mb-2">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span class="font-bold">Error</span>
+      </div>
+      <p class="text-sm mb-4">{{ error() }}</p>
+      <button (click)="loadRoomServices()" class="bg-red-600 hover:bg-red-700 text-white font-medium py-1.5 px-3 rounded-lg text-sm transition">
+        Reintentar
+      </button>
+    </div>
+  }
+
+  @if(!loading() && !error()){
+    @if(roomServices().length === 0){
+      <div class="text-center py-16 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
+        <div class="text-slate-400 text-4xl mb-3">
+          <i class="fa-solid fa-concierge-bell"></i>
+        </div>
+        <h5 class="text-lg font-semibold text-slate-700">No hay servicios disponibles</h5>
+        <p class="text-slate-500 text-sm mt-1 mb-6">Comienza registrando un nuevo servicio para las habitaciones.</p>
+        <button [routerLink]="['create']" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl transition">
+          Agregar Servicio
+        </button>
+      </div>
+    } @else {
+      <!-- Grilla de Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        @for(service of roomServices(); track service.roomServiceId){
+          <div class="bg-white border border-slate-200 hover:border-blue-300 rounded-2xl shadow-xs hover:shadow-md transition duration-300 flex flex-col h-full overflow-hidden">
+            <!-- Header de la Card -->
+            <div class="p-5 flex-1 flex flex-col">
+              <div class="flex justify-between items-start gap-2 mb-3">
+                <span class="text-2xl text-slate-400">
+                  @switch (service.type) {
+                    @case ('FOODS_AND_BEVERAGE') {
+                      <i class="fa-solid fa-utensils text-orange-500"></i>
+                    }
+                    @case ('HOUSEKEEPING') {
+                      <i class="fa-solid fa-broom text-teal-500"></i>
+                    }
+                    @case ('MAINTENANCE') {
+                      <i class="fa-solid fa-wrench text-rose-500"></i>
+                    }
+                    @default {
+                      <i class="fa-solid fa-concierge-bell text-indigo-500"></i>
+                    }
+                  }
+                </span>
+
+                <!-- Badge de Tipo -->
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider"
+                  [ngClass]="{
+                    'bg-orange-50 text-orange-700 border border-orange-100': service.type === 'FOODS_AND_BEVERAGE',
+                    'bg-teal-50 text-teal-700 border border-teal-100': service.type === 'HOUSEKEEPING',
+                    'bg-rose-50 text-rose-700 border border-rose-100': service.type === 'MAINTENANCE',
+                    'bg-indigo-50 text-indigo-700 border border-indigo-100': service.type === 'PERSONALIZED_ASSISTANCE'
+                  }">
+                  {{ serviceTypes[service.type] || service.type }}
+                </span>
+              </div>
+
+              <!-- Título y descripción -->
+              <h5 class="text-lg font-bold text-slate-800 line-clamp-1 mb-2">{{ service.name }}</h5>
+              <p class="text-sm text-slate-500 line-clamp-3 mb-4 flex-1">{{ service.description }}</p>
+              
+              <!-- Precio -->
+              <div class="mt-auto pt-3 border-t border-slate-100 flex items-baseline gap-1">
+                <span class="text-slate-400 text-sm font-semibold">Precio:</span>
+                <span class="text-2xl font-black text-slate-800">{{ service.price | currency:'USD':'symbol':'1.2-2' }}</span>
+              </div>
+            </div>
+
+            <!-- Footer de la Card con Acciones -->
+            <div class="bg-slate-50 px-5 py-3.5 border-t border-slate-100 flex justify-between gap-3">
+              <a [routerLink]="['edit', service.roomServiceId]" class="text-sm font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-pen-to-square"></i>
+                Editar
+              </a>
+              <button (click)="deleteRoomService(service.roomServiceId!)" class="text-sm font-semibold text-red-600 hover:text-red-800 cursor-pointer flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-trash-can"></i>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

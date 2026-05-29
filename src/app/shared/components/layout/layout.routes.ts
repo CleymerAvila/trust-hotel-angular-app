@@ -35,6 +35,10 @@ export const LAYOUT_ROUTES: Routes = [
         loadChildren: () => import('@features/promotions/promotions.routes').then(p => p.PROMOTIONS_ROUTES)
       },
       {
+        path: 'room-services',
+        loadChildren: () => import('@features/room-services/room-services.routes').then(m => m.ROOM_SERVICES_ROUTES)
+      },
+      {
         path: 'invoices',
         loadChildren: () => import('@features/invoices/invoices.routes').then(c => c.INVOICES_ROUTES)
       },
